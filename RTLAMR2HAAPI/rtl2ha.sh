@@ -45,7 +45,7 @@ curl -X POST -H "Authorization: Bearer $HA_TOKEN" \
 $HA_HOST:$HA_PORT/api/states/$DEVICEID
 
 
-echo "Sending to https://$HA_HOST:$HA_PORT/api/states/$DEVICEID"
+echo "Sending to https://$HA_HOST:$HA_PORT/api/states/sensor.$DEVICEID"
 echo $RESTDATA
 echo "\n"
 done
