@@ -11,8 +11,8 @@ HA_PORT="$(jq --raw-output '.port' $CONFIG_PATH)"
 HA_TOKEN="$(jq --raw-output '.token' $CONFIG_PATH)"
 # Start the listener and enter an endless loop
 echo "Starting RTLAMR with parameters:"
-echo "MQTT Message Type =" $AMR_MSGTYPE
-echo "MQTT Device IDs =" $AMR_IDS
+echo "AMR Message Type =" $AMR_MSGTYPE
+echo "AMR Device IDs =" $AMR_IDS
 
 
 # set -x  ## uncomment for MQTT logging...
