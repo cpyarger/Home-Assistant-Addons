@@ -42,7 +42,7 @@ RESTDATA=$( jq -nrc --arg state "$VAL" '{state: $state}')
 curl -X POST -H "Authorization: Bearer $HA_TOKEN" \
 -H "Content-Type: application/json" \
 -d $RESTDATA \
-https://$HA_HOST:$HA_PORT/api/states/$DEVICEID
+$HA_HOST:$HA_PORT/api/states/$DEVICEID
 
 
 echo "Sending to https://$HA_HOST:$HA_PORT/api/states/$DEVICEID"
