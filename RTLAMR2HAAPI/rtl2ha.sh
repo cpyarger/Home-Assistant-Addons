@@ -11,8 +11,8 @@ HA_PORT="$(jq --raw-output '.port' $CONFIG_PATH)"
 HA_TOKEN="$(jq --raw-output '.token' $CONFIG_PATH)"
 # Start the listener and enter an endless loop
 echo "Starting RTLAMR with parameters:"
-echo "MQTT Message Type =" $MQTT_MSGTYPE
-echo "MQTT Device IDs =" $MQTT_IDS
+echo "MQTT Message Type =" $AMR_MSGTYPE
+echo "MQTT Device IDs =" $AMR_IDS
 
 
 # set -x  ## uncomment for MQTT logging...
@@ -37,8 +37,6 @@ DEVICEID="$(echo $line | jq --raw-output '.Message.ID' | tr -s ' ' '_')"
 if [ "$DEVICEID" = "null" ]; then
   DEVICEID="$(echo $line | jq --raw-output '.Message.EndpointID' | tr -s ' ' '_')"
 fi
-MQTT_PATH="readings/$DEVICEID/meter_reading"
-
 RESTDATA=$( jq -nrc --arg state "$VAL" '{state: $state}')
 #echo $VAL | /usr/bin/mosquitto_pub -h $MQTT_HOST -p $MQTT_PORT -u $MQTT_USER -P $MQTT_PASS -i RTL_433 -r -l -t $MQTT_PATH
 curl -X POST -H "Authorization: Bearer $HA_TOKEN" \
@@ -46,8 +44,12 @@ curl -X POST -H "Authorization: Bearer $HA_TOKEN" \
 -d $RESTDATA \
 https://$HA_HOST:$HA_PORT/api/states/$DEVICEID
 
+
+echo "Sending to https://$HA_HOST:$HA_PORT/api/states/$DEVICEID"
+echo $RESTDATA
+echo "\n"
 done
-sleep 10m
+sleep 30s
 
 done
 
