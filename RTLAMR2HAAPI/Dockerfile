@@ -48,4 +48,4 @@ ENV PORT="8123"
 
 RUN git clone https://github.com/cpyarger/RTLAMR-2-HA-API/
 
-CMD cd RTLAMR-2-HA-API/RTLAMR2HAAPI && ls -alt && chmod +x rtl2ha.sh && rtl2ha.sh
+CMD cd RTLAMR-2-HA-API/RTLAMR2HAAPI && ls -alt && chmod +x ./rtl2ha.sh && ./rtl2ha.sh
