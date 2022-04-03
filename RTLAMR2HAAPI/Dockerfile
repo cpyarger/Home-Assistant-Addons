@@ -43,10 +43,8 @@ RUN go get github.com/bemasher/rtlamr
 # Define an environment variable
 #
 # Use this variable when creating a container to specify the MQTT broker host.
-ENV MQTT_HOST="hassio.local"
-ENV MQTT_PORT="1883"
-ENV MQTT_USER="guest"
-ENV MQTT_PASS="guest"
-ENV MQTT_TOPIC="homeassistant/sensor/rtl433"
+ENV HOST="hassio.local"
+ENV PORT="8123"
 
-CMD chmod +x rtl2ha.sh && rtl2ha.sh
+RUN git clone https://github.com/cpyarger/RTLAMR-2-HA-API/
+CMD cd RTLAMR2HAAPI && chmod +x rtl2ha.sh && rtl2ha.sh
