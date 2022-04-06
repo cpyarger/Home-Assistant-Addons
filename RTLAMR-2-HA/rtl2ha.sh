@@ -1,7 +1,5 @@
 #!/bin/sh
-if [ arch = "x86_64"]; then
 export LD_LIBRARY_PATH=/usr/local/lib64
-fi
 export LANG=C
 PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin"
 
