@@ -10,7 +10,6 @@ FROM $BUILD_FROM
 
 ENV LANG C.UTF-8
 
-MAINTAINER jaaem
 
 LABEL Description="This image is used to start a script that will monitor for RF events on 433Mhz (configurable) and send the data to an MQTT server"
 
