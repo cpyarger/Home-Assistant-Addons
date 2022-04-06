@@ -1,26 +1,25 @@
 # RTLAMR to Home Assistant API Bridge hass.io addon
 A hass.io addon for a software defined radio tuned to listen for Utility Meter RF transmissions and republish the data via Home Assistant's API
 
-This hassio addon is based on  JDeath's (RTLAMR2MQTT)(https://github.com/jdeath/RTLAMR2MQQT/tree/master/RTLAMR2MQQT) addon
+This hassio addon is based on  JDeath's [RTLAMR2MQTT](https://github.com/jdeath/RTLAMR2MQQT/tree/master/RTLAMR2MQQT) addon
 
-Which is based on biochemguy's (non-docker) setup: https://community.home-assistant.io/t/get-your-smart-electric-water-and-gas-meter-scm-readings-into-home-assistant-with-a-rtl-sdr
-This hass.io addon is based on James Fry' project here: https://github.com/james-fry/hassio-addons/tree/master/rtl4332mqtt
-which was based on Chris Kacerguis' project here: https://github.com/chriskacerguis/honeywell2mqtt,
-which is in turn based on Marco Verleun's rtl2mqtt image here: https://github.com/roflmao/rtl2mqtt
+Which is based on biochemguy's [(non-docker) setup](https://community.home-assistant.io/t/get-your-smart-electric-water-and-gas-meter-scm-readings-into-home-assistant-with-a-rtl-sdr)
+This hass.io addon is based on James Fry' [project here](https://github.com/james-fry/hassio-addons/tree/master/rtl4332mqtt)
+which was based on Chris Kacerguis' [project here](https://github.com/chriskacerguis/honeywell2mqtt)
+which is in turn based on Marco Verleun's [rtl2mqtt image here](https://github.com/roflmao/rtl2mqtt)
 
 ## Usage
 
 1) Install the addon. Do this by either:
- - downloading this repository and adding in a folder under /addons/ (eg. /addons/rtlamr2ha)
- - adding this respository to the Add-on Store
+    - Downloading this repository and adding in a folder under /addons/ (eg. /addons/rtlamr2ha)
+    - Adding this respository to the Add-on Store
 
-2) Use addon configuration to configure:
-- host (Do not add port number here)
-- port
-- token (Long Lived Access Token)
-- msgType (RTLAMR Message type; see below)
-- ids
-
+2) Use the addon configuration page to setup:
+    - host (Do not add port number here)
+    - port (home assistant port)
+    - token (Long Lived Access Token)
+    - msgType (RTLAMR Message type; see below)
+    - ids (IDs of the sensors you want to watch)
 
 3) Start the addon
 

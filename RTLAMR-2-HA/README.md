@@ -11,16 +11,15 @@ which is in turn based on Marco Verleun's [rtl2mqtt image here](https://github.c
 ## Usage
 
 1) Install the addon. Do this by either:
- - Downloading this repository and adding in a folder under /addons/ (eg. /addons/rtlamr2ha)
- - Adding this respository to the Add-on Store
+    - Downloading this repository and adding in a folder under /addons/ (eg. /addons/rtlamr2ha)
+    - Adding this respository to the Add-on Store
 
 2) Use the addon configuration page to setup:
-- host (Do not add port number here)
-- port (home assistant port)
-- token (Long Lived Access Token)
-- msgType (RTLAMR Message type; see below)
-- ids (IDs of the sensors you want to watch)
-
+    - host (Do not add port number here)
+    - port (home assistant port)
+    - token (Long Lived Access Token)
+    - msgType (RTLAMR Message type; see below)
+    - ids (IDs of the sensors you want to watch)
 
 3) Start the addon
 
