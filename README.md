@@ -1,5 +1,5 @@
 # RTLAMR to Home Assistant API Bridge hass.io addon
-A hass.io addon for a software defined radio tuned to listen for 433MHz RF transmissions and republish the data via Home Assistant's API
+A hass.io addon for a software defined radio tuned to listen for Utility Meter RF transmissions and republish the data via Home Assistant's API
 
 This hassio addon is based on  JDeath's (RTLAMR2MQTT)(https://github.com/jdeath/RTLAMR2MQQT/tree/master/RTLAMR2MQQT) addon
 
