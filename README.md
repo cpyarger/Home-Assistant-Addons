@@ -1,13 +1,12 @@
 # RTLAMR to Home Assistant API Bridge hass.io addon
 A hass.io addon for a software defined radio tuned to listen for 433MHz RF transmissions and republish the data via Home Assistant's API
 
-This hassio addon is based on biochemguy's (non-docker) setup: https://community.home-assistant.io/t/get-your-smart-electric-water-and-gas-meter-scm-readings-into-home-assistant-with-a-rtl-sdr
+This hassio addon is based on  JDeath's (RTLAMR2MQTT)(https://github.com/jdeath/RTLAMR2MQQT/tree/master/RTLAMR2MQQT) addon
+
+Which is based on biochemguy's (non-docker) setup: https://community.home-assistant.io/t/get-your-smart-electric-water-and-gas-meter-scm-readings-into-home-assistant-with-a-rtl-sdr
 This hass.io addon is based on James Fry' project here: https://github.com/james-fry/hassio-addons/tree/master/rtl4332mqtt
 which was based on Chris Kacerguis' project here: https://github.com/chriskacerguis/honeywell2mqtt,
 which is in turn based on Marco Verleun's rtl2mqtt image here: https://github.com/roflmao/rtl2mqtt
-
-Try some of my other addons at: https://github.com/jdeath/homeassistant-addons
-Currently have MeTube (youtube downloader), speedtest, emulatorjs (web based retro game console player), and WireGuard Easy (wireguard with WebUI on ingress, no more manual config!)
 
 ## Usage
 
@@ -16,24 +15,26 @@ Currently have MeTube (youtube downloader), speedtest, emulatorjs (web based ret
  - adding this respository to the Add-on Store
 
 2) Use addon configuration to configure:
-- host (use number IP address, not hassio.local, localhost, 127.0.0.1, etc) . Also do not add port number here
+- host (Do not add port number here)
 - port
 - token (Long Lived Access Token)
-- msgType
+- msgType (RTLAMR Message type; see below)
 - ids
 
-3) Copy rtl2mqtt.sh to your hass.io config dir in a subdir called rtlamr2ha.
-i.e.
-.../config/rtlamr2mqtt/rtl2ha.sh
-This allows you to edit the start script if you need to make any changes.
 
-If you are using a 64 bit version of hassio, add below line into the rtl2ha.sh:
-```
-export LD_LIBRARY_PATH=/usr/local/lib64
-```
+3) Start the addon
 
+### Message Types
 
-4) Start the addon
+The following message types are supported by rtlamr:
+
+- **scm**: Standard Consumption Message. Simple packet that reports total consumption.
+- **scm+**: Similar to SCM, allows greater precision and longer meter ID's.
+- **idm**: Interval Data Message. Provides differential consumption data for previous 47 intervals at 5 minutes per interval.
+- **netidm**: Similar to IDM, except net meters (type 8) have different internal packet structure, number of intervals and precision. Also reports total power production.
+- **r900**: Message type used by Neptune R900 transmitters, provides total consumption and leak flags.
+- **r900bcd**: Some Neptune R900 meters report consumption as a binary-coded digits.
+- **all**: Listen for ALL of the above message types
 
 ## Hardware
 
