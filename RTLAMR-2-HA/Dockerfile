@@ -1,4 +1,4 @@
-# Docker file to create an image for a hass.io add-on that contains enough software to listen to events via RTL_SDR/RTL_433 and then publish them to a MQTT broker.
+# Docker file to create an image for a hass.io add-on that contains enough software to listen to events via RTL_SDR/RTL_433 and then publish them to the Home Assistant REST API.
 # The script resides in a volume and can be modified to meet your needs.
 # This hass.io addon is based on Chris Kacerguis' project here: https://github.com/chriskacerguis/honeywell2mqtt,
 # which is in turn based on Marco Verleun's rtl2mqtt image here: https://github.com/roflmao/rtl2mqtt
@@ -45,10 +45,10 @@ RUN go get github.com/bemasher/rtlamr
 ENV HOST="hassio.local"
 ENV PORT="8123"
 
-RUN git clone https://github.com/cpyarger/RTLAMR-2-HA-API/ &&\
-    cd RTLAMR-2-HA-API &&\ 
+RUN git clone https://github.com/cpyarger/RTLAMR-2-HA/ &&\
+    cd RTLAMR-2-HA &&\ 
     git pull &&\
     cd ..
 
 
-CMD cd RTLAMR-2-HA-API/RTLAMR2HAAPI && ls -alt && chmod +x ./rtl2ha.sh && ./rtl2ha.sh
+CMD cd RTLAMR-2-HA/RTLAMR-2-HA && ls -alt && chmod +x ./rtl2ha.sh && ./rtl2ha.sh
