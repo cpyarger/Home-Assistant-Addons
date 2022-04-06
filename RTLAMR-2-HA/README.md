@@ -1,12 +1,11 @@
 # RTLAMR to Home Assistant API Bridge hass.io addon
 A hass.io addon for a software defined radio tuned to listen for Utility Meter RF transmissions and republish the data via Home Assistant's API
 
-This hassio addon is based on  JDeath's [RTLAMR2MQTT](https://github.com/jdeath/RTLAMR2MQQT/tree/master/RTLAMR2MQQT) addon
-
-Which is based on biochemguy's [(non-docker) setup](https://community.home-assistant.io/t/get-your-smart-electric-water-and-gas-meter-scm-readings-into-home-assistant-with-a-rtl-sdr)
-This hass.io addon is based on James Fry' [project here](https://github.com/james-fry/hassio-addons/tree/master/rtl4332mqtt)
-which was based on Chris Kacerguis' [project here](https://github.com/chriskacerguis/honeywell2mqtt)
-which is in turn based on Marco Verleun's [rtl2mqtt image here](https://github.com/roflmao/rtl2mqtt)
+- This hassio addon is based on  JDeath's [RTLAMR2MQTT](https://github.com/jdeath/RTLAMR2MQQT/tree/master/RTLAMR2MQQT) addon
+- Which is based on biochemguy's [(non-docker) setup](https://community.home-assistant.io/t/get-your-smart-electric-water-and-gas-meter-scm-readings-into-home-assistant-with-a-rtl-sdr)
+- This hass.io addon is based on James Fry' [project](https://github.com/james-fry/hassio-addons/tree/master/rtl4332mqtt)
+- which was based on Chris Kacerguis' [project](https://github.com/chriskacerguis/honeywell2mqtt)
+- which is in turn based on Marco Verleun's [rtl2mqtt image](https://github.com/roflmao/rtl2mqtt)
 
 ## Usage
 
