@@ -21,12 +21,12 @@ sleep 15
 LASTVAL="0"
 
 # set a time to listen for. Set to 0 for unliminted
-function postto(lines){
+function postto{
 
-VAL="$(echo $lines | jq --raw-output '.Message.Consumption' | tr -s ' ' '_')" # replace ' ' with '_'
-DEVICEID="$(echo $lines | jq --raw-output '.Message.ID' | tr -s ' ' '_')"
+VAL="$(echo $line | jq --raw-output '.Message.Consumption' | tr -s ' ' '_')" # replace ' ' with '_'
+DEVICEID="$(echo $line | jq --raw-output '.Message.ID' | tr -s ' ' '_')"
 if [ "$DEVICEID" = "null" ]; then
-  DEVICEID="$(echo $lines | jq --raw-output '.Message.EndpointID' | tr -s ' ' '_')"
+  DEVICEID="$(echo $line | jq --raw-output '.Message.EndpointID' | tr -s ' ' '_')"
 fi
 RESTDATA=$( jq -nrc --arg state "$VAL" '{state: $state}')
 #echo $VAL | /usr/bin/mosquitto_pub -h $MQTT_HOST -p $MQTT_PORT -u $MQTT_USER -P $MQTT_PASS -i RTL_433 -r -l -t $MQTT_PATH
