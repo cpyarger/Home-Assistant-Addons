@@ -2,8 +2,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
  
+## [0.7.1] - 2022-04-14
+### Changed
+- Ongoing log is now 1 line
 
- 
 ## [0.7.0] - 2022-04-14
 ### Added
 
