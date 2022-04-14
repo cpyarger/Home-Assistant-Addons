@@ -43,7 +43,7 @@ echo -e "\n"
 # Do this loop, so will restart if buffer runs out
 while true; do
 if ["$AMR_IDS" = ""]; then
-   /go/bin/rtlamr -format json -msgtype=$AMR_MSGTYPE -filterid=$AMR_IDS  | while read line
+   /go/bin/rtlamr -format json -msgtype=$AMR_MSGTYPE | while read line
    do
      postto
    done
