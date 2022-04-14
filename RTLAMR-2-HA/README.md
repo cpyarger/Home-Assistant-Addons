@@ -14,9 +14,6 @@ A hass.io addon for a software defined radio tuned to listen for Utility Meter R
     - Adding this respository to the Add-on Store
 
 2) Use the addon configuration page to setup:
-    - host (Do not add port number here)
-    - port (home assistant port)
-    - token (Long Lived Access Token)
     - msgType (RTLAMR Message type; see below)
     - ids (IDs of the sensors you want to watch)
 
