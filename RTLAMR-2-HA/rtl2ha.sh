@@ -24,8 +24,11 @@ LASTVAL="0"
 
 # Do this loop, so will restart if buffer runs out
 while true; do
-
-/go/bin/rtlamr -format json -msgtype=$AMR_MSGTYPE -filterid=$AMR_IDS  | while read line
+if ["$AMR_IDS" = ""]; then
+   /go/bin/rtlamr -format json -msgtype=$AMR_MSGTYPE -filterid=$AMR_IDS  | while read line
+else
+    /go/bin/rtlamr -format json -msgtype=$AMR_MSGTYPE -filterid=$AMR_IDS  | while read line
+fi
 #/go/bin/rtlamr -msgtype=all -format json  | while read line
 
 do
