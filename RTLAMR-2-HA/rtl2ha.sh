@@ -21,22 +21,12 @@ sleep 15
 LASTVAL="0"
 
 # set a time to listen for. Set to 0 for unliminted
+function postto(lines){
 
-# Do this loop, so will restart if buffer runs out
-while true; do
-if ["$AMR_IDS" = ""]; then
-   /go/bin/rtlamr -format json -msgtype=$AMR_MSGTYPE -filterid=$AMR_IDS  | while read line
-else
-    /go/bin/rtlamr -format json -msgtype=$AMR_MSGTYPE -filterid=$AMR_IDS  | while read line
-fi
-#/go/bin/rtlamr -msgtype=all -format json  | while read line
-
-do
-
-VAL="$(echo $line | jq --raw-output '.Message.Consumption' | tr -s ' ' '_')" # replace ' ' with '_'
-DEVICEID="$(echo $line | jq --raw-output '.Message.ID' | tr -s ' ' '_')"
+VAL="$(echo $lines | jq --raw-output '.Message.Consumption' | tr -s ' ' '_')" # replace ' ' with '_'
+DEVICEID="$(echo $lines | jq --raw-output '.Message.ID' | tr -s ' ' '_')"
 if [ "$DEVICEID" = "null" ]; then
-  DEVICEID="$(echo $line | jq --raw-output '.Message.EndpointID' | tr -s ' ' '_')"
+  DEVICEID="$(echo $lines | jq --raw-output '.Message.EndpointID' | tr -s ' ' '_')"
 fi
 RESTDATA=$( jq -nrc --arg state "$VAL" '{state: $state}')
 #echo $VAL | /usr/bin/mosquitto_pub -h $MQTT_HOST -p $MQTT_PORT -u $MQTT_USER -P $MQTT_PASS -i RTL_433 -r -l -t $MQTT_PATH
@@ -49,7 +39,23 @@ http://supervisor/core/api/states/sensor.$DEVICEID
 #$HA_HOST:$HA_PORT/api/states/sensor.$DEVICEID
 echo -e "\n"
 
-done
+}
+# Do this loop, so will restart if buffer runs out
+while true; do
+if ["$AMR_IDS" = ""]; then
+   /go/bin/rtlamr -format json -msgtype=$AMR_MSGTYPE -filterid=$AMR_IDS  | while read line
+   do
+     postto(line)
+   done
+else
+   /go/bin/rtlamr -format json -msgtype=$AMR_MSGTYPE -filterid=$AMR_IDS  | while read line
+   do
+     postto(line)
+   done
+fi
+#/go/bin/rtlamr -msgtype=all -format json  | while read line
+
+
 sleep 30s
 
 done
