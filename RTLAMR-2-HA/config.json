@@ -8,7 +8,7 @@
   "homeassistant_api": "True",
   "auth_api": "True",
   "map": ["config:rw", "ssl"],
-  "url": "https://github.com/cpyarger/RTLAMR-2-HA/tree/master/RTLAMR-2-HA",
+  "url": "https://github.com/cpyarger/Home-Assistant-Addons/tree/master/RTLAMR-2-HA",
   "usb": true,
   "host_network": "False",
   "arch": [
