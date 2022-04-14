@@ -38,15 +38,13 @@ fi
 RESTDATA=$( jq -nrc --arg state "$VAL" '{state: $state}')
 #echo $VAL | /usr/bin/mosquitto_pub -h $MQTT_HOST -p $MQTT_PORT -u $MQTT_USER -P $MQTT_PASS -i RTL_433 -r -l -t $MQTT_PATH
 #curl -X POST -H "Authorization: Bearer $HA_TOKEN" \
-echo "Sending to http://supervisor/core/api/states/sensor.$DEVICEID"
-echo $RESTDATA
-echo ""
-curl -o /dev/null -w "%{http_code}" -X POST -H "Authorization: Bearer $SUPERVISOR_TOKEN" \
+echo  "Sending  $RESTDATA  to http://supervisor/core/api/states/sensor.$DEVICEID"
+curl -s -o /dev/null -w "%{http_code}" -X POST -H "Authorization: Bearer $SUPERVISOR_TOKEN" \
 -H "Content-Type: application/json" \
 -d $RESTDATA \
 http://supervisor/core/api/states/sensor.$DEVICEID
 #$HA_HOST:$HA_PORT/api/states/sensor.$DEVICEID
-echo ""
+echo -e "\n"
 
 done
 sleep 30s
