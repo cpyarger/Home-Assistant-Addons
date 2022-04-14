@@ -21,7 +21,7 @@ sleep 15
 LASTVAL="0"
 
 # set a time to listen for. Set to 0 for unliminted
-function postto{
+function postto {
 
 VAL="$(echo $line | jq --raw-output '.Message.Consumption' | tr -s ' ' '_')" # replace ' ' with '_'
 DEVICEID="$(echo $line | jq --raw-output '.Message.ID' | tr -s ' ' '_')"
@@ -45,12 +45,12 @@ while true; do
 if ["$AMR_IDS" = ""]; then
    /go/bin/rtlamr -format json -msgtype=$AMR_MSGTYPE -filterid=$AMR_IDS  | while read line
    do
-     postto(line)
+     postto
    done
 else
    /go/bin/rtlamr -format json -msgtype=$AMR_MSGTYPE -filterid=$AMR_IDS  | while read line
    do
-     postto(line)
+     postto
    done
 fi
 #/go/bin/rtlamr -msgtype=all -format json  | while read line
