@@ -47,7 +47,7 @@ http://supervisor/core/api/states/sensor.$DEVICEID
 #$HA_HOST:$HA_PORT/api/states/sensor.$DEVICEID
 
 
-echo "Sending to $HA_HOST:$HA_PORT/api/states/sensor.$DEVICEID"
+echo "Sending to http://supervisor/core/api/states/sensor.$DEVICEID"
 echo $RESTDATA
 echo "\n"
 done
