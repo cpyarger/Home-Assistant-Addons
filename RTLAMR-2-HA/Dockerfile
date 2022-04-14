@@ -51,4 +51,4 @@ RUN git clone https://github.com/cpyarger/Home-Assistant-Addons/ &&\
     cd ..
 
 
-CMD cd Home-Assistant-Addons/RTLAMR-2-HA && ls -alt && chmod +x ./rtl2ha.sh && ./rtl2ha.sh
+CMD cd Home-Assistant-Addons/RTLAMR-2-HA && chmod +x ./rtl2ha.sh && ./rtl2ha.sh
