@@ -6,9 +6,7 @@ PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin"
 CONFIG_PATH=/data/options.json
 AMR_MSGTYPE="$(jq --raw-output '.msgType' $CONFIG_PATH)"
 AMR_IDS="$(jq --raw-output '.ids' $CONFIG_PATH)"
-HA_HOST="$(jq --raw-output '.host' $CONFIG_PATH)"
-HA_PORT="$(jq --raw-output '.port' $CONFIG_PATH)"
-HA_TOKEN="$(jq --raw-output '.token' $CONFIG_PATH)"
+
 # Start the listener and enter an endless loop
 echo "Starting RTLAMR with parameters:"
 echo "AMR Message Type =" $AMR_MSGTYPE
@@ -40,15 +38,16 @@ fi
 RESTDATA=$( jq -nrc --arg state "$VAL" '{state: $state}')
 #echo $VAL | /usr/bin/mosquitto_pub -h $MQTT_HOST -p $MQTT_PORT -u $MQTT_USER -P $MQTT_PASS -i RTL_433 -r -l -t $MQTT_PATH
 #curl -X POST -H "Authorization: Bearer $HA_TOKEN" \
-curl -X POST -H "Authorization: Bearer $SUPERVISOR_TOKEN" \
+echo "Sending to http://supervisor/core/api/states/sensor.$DEVICEID"
+echo $RESTDATA
+echo ""
+curl -o /dev/null -w "%{http_code}" -X POST -H "Authorization: Bearer $SUPERVISOR_TOKEN" \
 -H "Content-Type: application/json" \
 -d $RESTDATA \
 http://supervisor/core/api/states/sensor.$DEVICEID
 #$HA_HOST:$HA_PORT/api/states/sensor.$DEVICEID
+echo ""
 
-echo "Token $SUPERVISOR_TOKEN"
-echo "Sending to http://supervisor/core/api/states/sensor.$DEVICEID"
-echo $RESTDATA
 done
 sleep 30s
 
