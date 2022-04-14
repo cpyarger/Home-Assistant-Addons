@@ -45,10 +45,10 @@ RUN go get github.com/bemasher/rtlamr
 ENV HOST="hassio.local"
 ENV PORT="8123"
 
-RUN git clone https://github.com/cpyarger/RTLAMR-2-HA/ &&\
-    cd RTLAMR-2-HA &&\ 
+RUN git clone https://github.com/cpyarger/Home-Assistant-Addons/ &&\
+    cd Home-Assistant-Addons &&\ 
     git pull &&\
     cd ..
 
 
-CMD cd RTLAMR-2-HA/RTLAMR-2-HA && ls -alt && chmod +x ./rtl2ha.sh && ./rtl2ha.sh
+CMD cd Home-Assistant-Addons/RTLAMR-2-HA && ls -alt && chmod +x ./rtl2ha.sh && ./rtl2ha.sh
