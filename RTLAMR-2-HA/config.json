@@ -1,10 +1,12 @@
 {
   "name": "RTLAMR to HA REST API",
-  "version": "0.6.15",
+  "version": "0.6.16",
   "slug": "rtlamr",
   "description": "RF to Home Assistant REST API Bridge based on RTL_SDR/RTL_433 for RTL2832U based DVB-T USB tuners",
   "startup": "application",
   "boot": "auto",
+  "homeassistant_api": "True",
+  "auth_api": "True",
   "map": ["config:rw", "ssl"],
   "url": "https://github.com/cpyarger/RTLAMR-2-HA/tree/master/RTLAMR-2-HA",
   "usb": true,
