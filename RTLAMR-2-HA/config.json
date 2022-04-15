@@ -24,12 +24,8 @@
   },
   "schema":
   {
-    "msgType": "list("scm"|"scm+"|"idm"|"netidm"|"r900"|"r900bcd"|"all"),
-    "ids":"str?"
+    "msgType": list("scm"|"scm+"|"idm"|"netidm"|"r900"|"r900bcd"|"all"),
+    "ids": "str?"
    }
 }
-idm: Interval Data Message. Provides differential consumption data for previous 47 intervals at 5 minutes per interval.
-netidm: Similar to IDM, except net meters (type 8) have different internal packet structure, number of intervals and precision. Also reports total power production.
-r900: Message type used by Neptune R900 transmitters, provides total consumption and leak flags.
-r900bcd: Some Neptune R900 meters report consumption as a binary-coded digits.
-all: Listen for ALL of the above message types
+
