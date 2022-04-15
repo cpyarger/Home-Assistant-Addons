@@ -24,7 +24,7 @@
   },
   "schema":
   {
-    "msgType": list("scm"|"scm+"|"idm"|"netidm"|"r900"|"r900bcd"|"all"),
+    "msgType": "list(scm|scm+|idm|netidm|r900|r900bcd|all)",
     "ids": "str?"
    }
 }
