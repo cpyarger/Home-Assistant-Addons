@@ -21,7 +21,7 @@
   {
 	  "msgType": "scm",
 	  "ids": "",
-	  "initial_listen_time: 15,
+	  "initial_listen_time": 15,
 	  "pause_time": 30
   },
   "schema":
