@@ -20,12 +20,16 @@
   "options":
   {
 	  "msgType": "scm",
-	  "ids": ""
+	  "ids": "",
+	  "initial_listen_time: 15,
+	  "pause_time": 30
   },
   "schema":
   {
     "msgType": "list(scm|scm+|idm|netidm|r900|r900bcd|all)",
-    "ids": "str?"
+    "ids": "str?",
+    "initial_listen_time": "int?",
+    "pause_time" "int?"
    }
 }
 
