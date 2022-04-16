@@ -1,7 +1,10 @@
 
 # Change Log
 All notable changes to this project will be documented in this file.
-
+## [0.7.4] - 2022-04-15
+### Added
+- Inital Listen Time option
+- Time Between Readings option
 ## [0.7.3] - 2022-04-14
 ### Changes
 - Converted msgType to a list
