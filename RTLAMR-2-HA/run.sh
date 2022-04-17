@@ -6,7 +6,7 @@ PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin"
 CONFIG_PATH=/data/options.json
 AMR_MSGTYPE="$(jq --raw-output '.msgType' $CONFIG_PATH)"
 AMR_IDS="$(jq --raw-output '.ids' $CONFIG_PATH)"
-IWT="$(jq --raw-output '.initial_listen_time' $CONFIG_PATH)"
+DURATION="$(jq --raw-output '.duration' $CONFIG_PATH)"
 PT="$(jq --raw-output '.pause_time' $CONFIG_PATH)"
 # Start the listener and enter an endless loop
 echo "Starting RTLAMR with parameters:"
@@ -19,7 +19,7 @@ echo "Time Between Readings =" $PT
 # set -x  ## uncomment for MQTT logging...
 /usr/local/bin/rtl_tcp &
 # Sleep to fill buffer a bit
-sleep $IWT
+sleep 15
 
 LASTVAL="0"
 
@@ -46,12 +46,12 @@ echo -e "\n"
 # Do this loop, so will restart if buffer runs out
 while true; do
 if ["$AMR_IDS" = ""]; then
-   /go/bin/rtlamr -format json -msgtype=$AMR_MSGTYPE | while read line
+   /go/bin/rtlamr -format json -msgtype=$AMR_MSGTYPE -duration=${DURATION}s| while read line
    do
      postto
    done
 else
-   /go/bin/rtlamr -format json -msgtype=$AMR_MSGTYPE -filterid=$AMR_IDS  | while read line
+   /go/bin/rtlamr -format json -msgtype=$AMR_MSGTYPE -filterid=$AMR_IDS -duration=${DURATION}s | while read line
    do
      postto
    done

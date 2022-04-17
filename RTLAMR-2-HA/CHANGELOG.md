@@ -1,6 +1,10 @@
 
 # Change Log
 All notable changes to this project will be documented in this file.
+## [0.7.6] - 2022-04-17
+### Changes
+- Added read duration option
+- Removed Initial Wait Time Option and replaced it with a static 15s
 
 ## [0.7.5] - 2022-04-16
 ### Changes
