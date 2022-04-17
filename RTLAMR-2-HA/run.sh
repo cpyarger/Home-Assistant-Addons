@@ -6,6 +6,7 @@ PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin"
 CONFIG_PATH=/data/options.json
 AMR_MSGTYPE="$(jq --raw-output '.msgType' $CONFIG_PATH)"
 AMR_IDS="$(jq --raw-output '.ids' $CONFIG_PATH)"
+de="$(jq --raw-output '.duration_enable' $CONFIG_PATH)"
 DURATION="$(jq --raw-output '.duration' $CONFIG_PATH)"
 PT="$(jq --raw-output '.pause_time' $CONFIG_PATH)"
 # Start the listener and enter an endless loop
@@ -43,23 +44,27 @@ http://supervisor/core/api/states/sensor.$DEVICEID
 echo -e "\n"
 
 }
+x=""
+function listener {
+   /go/bin/rtlamr -format json -msgtype=$AMR_MSGTYPE x| while read line
+   do
+     postto
+   done
+}
 # Do this loop, so will restart if buffer runs out
 while true; do
-if ["$AMR_IDS" = ""]; then
-   /go/bin/rtlamr -format json -msgtype=$AMR_MSGTYPE -duration=${DURATION}s| while read line
-   do
-     postto
-   done
-else
-   /go/bin/rtlamr -format json -msgtype=$AMR_MSGTYPE -filterid=$AMR_IDS -duration=${DURATION}s | while read line
-   do
-     postto
-   done
-fi
-#/go/bin/rtlamr -msgtype=all -format json  | while read line
 
+  if [["$AMR_IDS" != ""]]; then
+    x="$x -filterid=$AMR_IDS"
+  fi
 
-sleep $PT
+  if $de; then
+    x="$x -duration=${DURATION}s"
+  fi
+
+  listener
+
+  sleep $PT
 
 done
 

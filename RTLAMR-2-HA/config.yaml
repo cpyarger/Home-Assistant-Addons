@@ -21,11 +21,13 @@ arch:
 options:  
   msgType: scm
   ids: ""
+  duration_enable: False
   duration: 15
   pause_time: 30
 schema:
   msgType: list(scm|scm+|idm|netidm|r900|r900bcd|all)
   ids: str?
+  duration_enable: bool
   duration: int
   pause_time: int
   
