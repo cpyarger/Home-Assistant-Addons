@@ -11,6 +11,7 @@ ESPH_ENABLE="$(jq --raw-output '.esphome_config_enable' $CONFIG_PATH)"
 echo "Git Back Up Start"
 
 
-
+ls /
+ls /config
 sleep 1
 echo "Git Back Up Start"
