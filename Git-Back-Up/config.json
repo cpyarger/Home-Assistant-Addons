@@ -1,0 +1,32 @@
+{
+  "name": "Git Back Up",
+  "version": "0.0.1",
+  "slug": "gbu",
+  "description": "Uses Git to back up Config Folder",
+  "startup": "application",
+  "boot": "auto",
+  "map": ["config:rw", "ssl"],
+  "url": "https://github.com/cpyarger/RTLAMR-2-HA/tree/master/git-back-up",
+  "usb": true,
+  "host_network": "False",
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7",
+    "i386"
+  ],
+  "options":
+  {
+    "git_url": "",
+    "git_rsa_kay": "",
+	  "home_assistant_config_enable": true,
+	  "esphome_config_enable": true
+  },
+  "schema":
+  {
+    "git_url": "str",
+    "git_rsa_kay": "password",
+    "home_assistant_config_enable": "bool",
+	  "esphome_config_enable": "bool"
+   }
+}
