@@ -15,7 +15,6 @@ arch:
   - aarch64
   - amd64
   - i386
-image: homeassistant/{arch}-addon-git_pull
 options:
   git_url: ""
   git_rsa_kay: ""
