@@ -1,6 +1,6 @@
 ---
 name: Git Back Up
-version: 0.0.15
+version: 0.0.156
 slug: git-back-up
 description: Uses Git to back up Config Folder
 startup: application
@@ -16,40 +16,21 @@ arch:
   - amd64
   - i386
 options:
-  home_assistant_config_enable: true
-  esphome_config_enable: false
-  auto_restart: false
+  include_secrets_file: false
   deployment_key: []
   deployment_key_protocol: rsa
   deployment_password: ""
   deployment_user: ""
-  git_branch: master
-  git_command: pull
-  git_prune: false
+  git_branch: main
   git_remote: origin
-  repeat:
-    active: false
-    interval: 300
   repository: null
-  restart_ignore:
-    - ui-lovelace.yaml
-    - .gitignore
 schema:
-  home_assistant_config_enable: bool
-  esphome_config_enable: bool
-  auto_restart: bool
+  include_secrets_file: bool
   deployment_key:
-    - str
+    - password
   deployment_key_protocol: match(rsa|dsa|ecdsa|ed25519|rsa)
   deployment_password: password
   deployment_user: str
   git_branch: str
-  git_command: list(pull|reset)
-  git_prune: bool
   git_remote: str
-  repeat:
-    active: bool
-    interval: int
   repository: str
-  restart_ignore:
-    - str
