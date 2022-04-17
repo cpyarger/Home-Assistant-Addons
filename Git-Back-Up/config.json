@@ -1,6 +1,6 @@
 {
   "name": "Git Back Up",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "slug": "gbu",
   "description": "Uses Git to back up Config Folder",
   "startup": "application",
