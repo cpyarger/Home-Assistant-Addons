@@ -10,7 +10,7 @@ LABEL Description="This image is used to start a script that will monitor for ch
 RUN  apk add --no-cache jq coreutils wget git inotify-tools
 
 RUN git clone https://github.com/cpyarger/Home-Assistant-Addons/ &&\
-    cd Git-Back-Up &&\ 
+    cd Home-Assistant-Addons/ &&\ 
     git pull &&\
     cd ..
     
