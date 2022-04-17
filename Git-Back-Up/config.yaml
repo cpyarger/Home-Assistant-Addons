@@ -1,0 +1,33 @@
+---
+name: Git Back Up
+version: 0.0.5
+slug: git-back-up
+description: Uses Git to back up Config Folder
+boot: auto
+map: 
+- config: rw
+- ssl
+url: https://github.com/cpyarger/Home-Assistant-Addons/tree/master/Git-Back-Up
+arch:
+  - armhf
+  - armv7
+  - aarch64
+  - amd64
+  - i386
+boot: manual
+hassio_api: true
+hassio_role: homeassistant
+image: homeassistant/{arch}-addon-git_pull
+options:
+  git_url: ""
+  git_rsa_kay: ""
+	home_assistant_config_enable: true
+	esphome_config_enable: true
+
+schema:
+  git_url: str
+  git_rsa_kay: password
+  home_assistant_config_enable: bool
+	esphome_config_enable: bool
+startup: services
+
