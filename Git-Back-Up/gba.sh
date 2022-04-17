@@ -10,9 +10,9 @@ ESPH_ENABLE="$(jq --raw-output '.esphome_config_enable' $CONFIG_PATH)"
 
 echo "Git Back Up Start"
 
-inotifywait -e close_write,moved_to,create -m /config |
+inotifywait  -r -e close_write,moved_to,create,modify -m /config |
 while read -r directory events filename; do
-  if [ "$filename" = "*.yaml" ]||[ "$filename" = "*.Yaml" ]||[ "$filename" = "*.YAML" ]; then
+  if [ "$filename" = "*.yaml" ] || [ "$filename" = "*.Yaml" ] || [ "$filename" = "*.YAML" ]; then
     echo "File Changed: " $filename
   fi
 done
