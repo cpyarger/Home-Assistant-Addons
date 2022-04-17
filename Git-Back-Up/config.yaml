@@ -6,8 +6,7 @@ description: Uses Git to back up Config Folder
 startup: application
 boot: auto
 map: 
-- config: rw
-- ssl: ""
+  - config:rw
 url: https://github.com/cpyarger/Home-Assistant-Addons/tree/master/Git-Back-Up
 init: false
 arch:
