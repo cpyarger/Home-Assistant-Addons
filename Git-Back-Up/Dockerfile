@@ -10,8 +10,8 @@ LABEL Description="This image is used to start a script that will monitor for ch
 RUN  apk add --no-cache jq coreutils wget git inotify-tools
 
 
-COPY gba.sh /
-RUN chmod a+x /gba.sh
+COPY run.sh /
+RUN chmod a+x /run.sh
 
-CMD [ "/gba.sh" ]
+CMD [ "/run.sh" ]
 
