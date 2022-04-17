@@ -16,7 +16,6 @@ arch:
   - amd64
   - i386
 options:
-
   home_assistant_config_enable: true
   esphome_config_enable: false
   auto_restart: false
@@ -36,6 +35,8 @@ options:
     - ui-lovelace.yaml
     - .gitignore
 schema:
+  home_assistant_config_enable: bool
+  esphome_config_enable: bool
   auto_restart: bool
   deployment_key:
     - str
@@ -52,5 +53,3 @@ schema:
   repository: str
   restart_ignore:
     - str
-  home_assistant_config_enable: bool
-  esphome_config_enable: bool
