@@ -7,17 +7,15 @@ startup: application
 boot: auto
 map: 
 - config: rw
-- ssl
+- ssl: ""
 url: https://github.com/cpyarger/Home-Assistant-Addons/tree/master/Git-Back-Up
+init: false
 arch:
   - armhf
   - armv7
   - aarch64
   - amd64
   - i386
-boot: manual
-hassio_api: true
-hassio_role: homeassistant
 image: homeassistant/{arch}-addon-git_pull
 options:
   git_url: ""
