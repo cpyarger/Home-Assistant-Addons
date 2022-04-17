@@ -1,6 +1,6 @@
 ---
 name: Git Back Up
-version: 0.0.10
+version: 0.0.11
 slug: git-back-up
 description: Uses Git to back up Config Folder
 startup: application
