@@ -14,7 +14,7 @@ ENV LANG C.UTF-8
 LABEL Description="This image is used to start a script that will monitor for changes to config files and automatically back them up with git"
 
 
-RUN  apk add --no-cache libusb  jq coreutils wget make musl-dev go git gcc usb-modeswitch
+RUN  apk add --no-cache jq coreutils wget git watchman
 
 
 # Define an environment variable
