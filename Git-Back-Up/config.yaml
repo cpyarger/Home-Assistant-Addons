@@ -3,6 +3,7 @@ name: Git Back Up
 version: 0.0.5
 slug: git-back-up
 description: Uses Git to back up Config Folder
+startup: application
 boot: auto
 map: 
 - config: rw
@@ -29,5 +30,4 @@ schema:
   git_rsa_kay: password
   home_assistant_config_enable: bool
 	esphome_config_enable: bool
-startup: services
 
