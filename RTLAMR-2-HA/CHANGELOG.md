@@ -2,6 +2,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.7.5] - 2022-04-16
+### Changes
+- Modified Dockerfile to no longer need to be rebuilt each update
+
 ## [0.7.4] - 2022-04-15
 ### Added
 - Inital Listen Time option

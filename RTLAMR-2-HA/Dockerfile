@@ -38,17 +38,8 @@ RUN mkdir -p ${GOPATH}/src ${GOPATH}/bin
 
 RUN go get github.com/bemasher/rtlamr
 
-#
-# Define an environment variable
-#
-# Use this variable when creating a container to specify the MQTT broker host.
-ENV HOST="hassio.local"
-ENV PORT="8123"
 
-RUN git clone https://github.com/cpyarger/Home-Assistant-Addons/ &&\
-    cd Home-Assistant-Addons &&\ 
-    git pull &&\
-    cd ..
+COPY run.sh /
+RUN chmod a+x /run.sh
 
-
-CMD cd Home-Assistant-Addons/RTLAMR-2-HA && chmod +x ./rtl2ha.sh && ./rtl2ha.sh
+CMD [ "/run.sh" ]
