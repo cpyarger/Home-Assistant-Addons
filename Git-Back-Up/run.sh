@@ -14,7 +14,7 @@ CONFIG_PATH=/data/options.json
 
 
 
-if [! -d /config/.git ]; then
+if [ ! -d /config/.git ]; then
   echo Not yet a git repo;
   #echo "# git-back-up" >> README.md
   #git init
