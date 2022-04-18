@@ -1,2 +1,6 @@
 # Git Back Up hass.io addon
-A hass.io addon That watches enabled Config Directories and backs up any yaml files that change using git, and posts them to a remote git repository
+
+# Not Ready Yet!
+
+A Hass.io addon that will automatically backup all yaml files in your `/config/` folder using Git and posting to a remote repository. 
+# Not Ready for use currently
