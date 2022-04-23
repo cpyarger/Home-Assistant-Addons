@@ -1,9 +1,9 @@
 ---
-version: 0.0.16
+version: 0.0.17
 slug: googledomainsdns
 name: Google Domains Dynamic DNS
 description: >-
-  Dynamic DNS (DynDNS or DDNS) service via Google Domains with Let's Encrypt support
+  Dynamic DNS (DynDNS or DDNS) service via Google Domains \n
   (saves me from having to restart Home Assistant when the integration fails)
 
 url: https://github.com/cpyarger/Home-Assistant-Addons/tree/master/GoogleDomainsDNS
@@ -19,11 +19,11 @@ options:
   domain: ""
   username: ""
   password: ""
-  lets_encrypt:
-    accept_terms: false
-    algo: secp384r1
-    certfile: fullchain.pem
-    keyfile: privkey.pem
+  #lets_encrypt:
+  #  accept_terms: false
+  #  algo: secp384r1
+  #  certfile: fullchain.pem
+  #  keyfile: privkey.pem
   seconds: 300
 schema:
   domain: str
@@ -31,10 +31,10 @@ schema:
   password: password
   ipv4: str?
   ipv6: str?
-  lets_encrypt:
-    accept_terms: bool
-    algo: list(rsa|prime256v1|secp384r1)
-    certfile: str
-    keyfile: str
+  #lets_encrypt:
+  #  accept_terms: bool
+  #  algo: list(rsa|prime256v1|secp384r1)
+  #  certfile: str
+  #  keyfile: str
   seconds: int
 startup: services
