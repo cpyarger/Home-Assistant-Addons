@@ -1,5 +1,5 @@
 ---
-version: 0.0.2
+version: 0.0.3
 slug: googledomainsdns
 name: Google Domains Dynamic DNS
 description: >-
@@ -14,7 +14,7 @@ arch:
 map:
   - ssl:rw
 options:
-  aliases: []
+  domain: ""
   username: ""
   password: ""
   lets_encrypt:
@@ -25,9 +25,7 @@ options:
   seconds: 300
   token: null
 schema:
-  aliases:
-    - alias: str
-      domain: str
+  domain: str
   username: str
   password: password
   ipv4: str?
@@ -38,5 +36,4 @@ schema:
     certfile: str
     keyfile: str
   seconds: int
-  token: str
 startup: services
