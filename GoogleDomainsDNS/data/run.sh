@@ -52,7 +52,7 @@ while true; do
     echo $IPV4
     #if answer="$(curl -s "https://www.duckdns.org/update?domains=${DOMAINS}&token=${TOKEN}&ip=${ipv4}&ipv6=${ipv6}&verbose=true")" && [ "${answer}" != 'KO' ]; then
     #if answer="$(curl -s "https://${USERNAME}:${PASSWORD}@domains.google.com/nic/update?hostname=${DOMAIN}&myip=${ipv4}")" && [ "${answer}" != 'KO' ]; then
-    if answer="$(curl -s --data-urlencode "hostname=$DOMAIN" --data-urlencode "myip=$currentipaddress" -H "Host: domains.google.com" -u "$USERNAME:$PASSWORD" "https://domains.google.com/nic/update"" && [ "${answer}" != 'KO' ]; then
+    if answer="$(curl -s --data-urlencode "hostname=$DOMAIN" --data-urlencode "myip=$currentipaddress" -H "Host: domains.google.com" -u "$USERNAME:$PASSWORD" "https://domains.google.com/nic/update")" && [ "${answer}" != 'KO' ]; then
         bashio::log.info "${answer}"
     else
         bashio::log.warning "${answer}"
