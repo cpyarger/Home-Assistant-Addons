@@ -12,7 +12,7 @@ SYS_KEYFILE=$(jq --raw-output '.lets_encrypt.keyfile' $CONFIG_PATH)
 
 deploy_challenge() {
     local DOMAIN="${1}" TOKEN_FILENAME="${2}" TOKEN_VALUE="${3}" ALIAS
-    ALIAS=$(bashio::config 'domain')
+    ALIAS=$(jq --raw-output '.domain' $CONFIG_PATH)
 
 
     # This hook is called once for every domain that needs to be
@@ -37,7 +37,7 @@ deploy_challenge() {
 
 clean_challenge() {
     local DOMAIN="${1}" TOKEN_FILENAME="${2}" TOKEN_VALUE="${3}" ALIAS
-    ALIAS=$(bashio::config 'domain')
+    ALIAS=$(jq --raw-output '.domain' $CONFIG_PATH)
 
 
     # This hook is called after attempting to validate each domain,
@@ -51,7 +51,7 @@ clean_challenge() {
 
 deploy_cert() {
     local DOMAIN="${1}" KEYFILE="${2}" CERTFILE="${3}" FULLCHAINFILE="${4}" CHAINFILE="${5}" TIMESTAMP="${6}"
-    DOMAIN=$(bashio::config 'domain')
+    DOMAIN=$(jq --raw-output '.domain' $CONFIG_PATH)
 
     # This hook is called once for each certificate that has been
     # produced. Here you might, for instance, copy your new certificates
