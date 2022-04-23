@@ -9,37 +9,15 @@ LE_UPDATE="0"
 # DuckDNS
 if bashio::config.has_value "ipv4"; then IPV4=$(bashio::config 'ipv4'); else IPV4=""; fi
 if bashio::config.has_value "ipv6"; then IPV6=$(bashio::config 'ipv6'); else IPV6=""; fi
-TOKEN=$(bashio::config 'token')
-DOMAINS=$(bashio::config 'domains | join(",")')
-USERNAME=$(bashio::config 'google_domains.username')
-PASSWORD=$(bashio::config 'google_domains.password')
+DOMAIN=$(bashio::config 'domain')
+USERNAME=$(bashio::config 'username')
+PASSWORD=$(bashio::config 'password')
 WAIT_TIME=$(bashio::config 'seconds')
 ALGO=$(bashio::config 'lets_encrypt.algo')
 
 # Function that performe a renew
 function le_renew() {
-    local domain_args=()
-    local domains=''
-    local aliases=''
-
-    domains=$(bashio::config 'domains')
-
-    # Prepare domain for Let's Encrypt
-    for domain in ${domains}; do
-        for alias in $(jq --raw-output --exit-status "[.aliases[]|{(.alias):.domain}]|add.\"${domain}\" | select(. != null)" /data/options.json) ; do
-            aliases="${aliases} ${alias}"
-        done
-    done
-
-    aliases="$(echo "${aliases}" | tr ' ' '\n' | sort | uniq)"
-
-    bashio::log.info "Renew certificate for domains: $(echo -n "${domains}") and aliases: $(echo -n "${aliases}")"
-
-    for domain in $(echo "${domains}" "${aliases}" | tr ' ' '\n' | sort | uniq); do
-        domain_args+=("--domain" "${domain}")
-    done
-
-    dehydrated --cron --algo "${ALGO}" --hook ./hooks.sh --challenge dns-01 "${domain_args[@]}" --out "${CERT_DIR}" --config "${WORK_DIR}/config" || true
+    dehydrated --cron --algo "${ALGO}" --hook ./hooks.sh --challenge dns-01 --domain "${DOMAIN}" --out "${CERT_DIR}" --config "${WORK_DIR}/config" || true
     LE_UPDATE="$(date +%s)"
 }
 
