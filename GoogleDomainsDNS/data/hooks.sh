@@ -32,7 +32,7 @@ deploy_challenge() {
     #   TXT record. For HTTP validation it is the value that is expected
     #   be found in the $TOKEN_FILENAME file.
 
-    curl -s "https://www.duckdns.org/update?domains=$ALIAS&token=$SYS_TOKEN&txt=$TOKEN_VALUE"
+    curl -s "https://domains.google.com/nic/update?domains=$ALIAS&token=$SYS_TOKEN&txt=$TOKEN_VALUE"
 }
 
 clean_challenge() {
@@ -46,7 +46,7 @@ clean_challenge() {
     #
     # The parameters are the same as for deploy_challenge.
 
-    curl -s "https://www.duckdns.org/update?domains=$ALIAS&token=$SYS_TOKEN&txt=removed&clear=true"
+    curl -s "https://www.domains.google.com/nic/update?domains=$ALIAS&token=$SYS_TOKEN&txt=removed&clear=true"
 }
 
 deploy_cert() {
