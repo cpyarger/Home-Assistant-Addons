@@ -8,7 +8,6 @@ CONFIG_PATH=/data/options.json
   deployment_key_protocol="$(jq --raw-output '.deployment_key_protocol' $CONFIG_PATH)"
   deployment_password="$(jq --raw-output '.deployment_password' $CONFIG_PATH)"
   deployment_user="$(jq --raw-output '.deployment_user' $CONFIG_PATH)"
-  git_branch="$(jq --raw-output '.git_branch' $CONFIG_PATH)"
   git_remote="$(jq --raw-output '.git_remote' $CONFIG_PATH)"
   repository="$(jq --raw-output '.repository' $CONFIG_PATH)"
 
