@@ -48,7 +48,7 @@ while true; do
     # Get public IP Address
     currentipaddress="$(curl icanhazip.com)"
     # Update Google Domains
-    if answer="$(curl -s -o /dev/null --data-urlencode "hostname=$DOMAIN" --data-urlencode "myip=$currentipaddress" -H "Host: domains.google.com" -u "$USERNAME:$PASSWORD" "https://domains.google.com/nic/update")" && [ "${answer}" != 'KO' ]; then
+    if answer="$(curl -s -o /dev/null -w "%{http_code}" --data-urlencode "hostname=$DOMAIN" --data-urlencode "myip=$currentipaddress" -H "Host: domains.google.com" -u "$USERNAME:$PASSWORD" "https://domains.google.com/nic/update")" && [ "${answer}" != 'KO' ]; then
         bashio::log.info "${answer}"
     else
         bashio::log.warning "${answer}"
