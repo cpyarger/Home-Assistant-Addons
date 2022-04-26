@@ -1,24 +1,20 @@
 ---
 name: InfiniTime
-version: 0.0.8
+version: 0.0.10
 slug: infinitime
 description: BLE addon that interfaces with watches running infinitime
 startup: application
 boot: auto
 homeassistant_api: True
 auth_api: True
-map: 
-  - config:rw 
+map:
+  - config:rw
   - ssl
 url: https://github.com/cpyarger/Home-Assistant-Addons/tree/master/InfiniTime
 usb: true
 host_network: False
-arch: 
+arch:
   - aarch64
   - amd64
   - armv7
   - i386
-
-  
-
-

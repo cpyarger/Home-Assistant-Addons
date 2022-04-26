@@ -27,8 +27,8 @@ RUN mkdir -p ${GOPATH}/src ${GOPATH}/bin
 
 RUN go get go.arsenm.dev/itd
 
-
+RUN ls
 COPY run.sh /
 RUN chmod a+x /run.sh
 
-CMD [ "/run.sh" ]
+#CMD [ "/run.sh" ]

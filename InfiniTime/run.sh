@@ -1,17 +1,16 @@
-#!/bin/sh
+#!/bin/bash
 export LD_LIBRARY_PATH=/usr/local/lib64
 export LANG=C
 PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin"
 
 CONFIG_PATH=/data/options.json
 
-ls
+ls /usr/local/bin
 
 echo "infinitime addon"
 
-echo "battery" 
+echo "battery"
 itctl get batt
-
 echo ""
 echo "heartrate"
 itctl get heart
