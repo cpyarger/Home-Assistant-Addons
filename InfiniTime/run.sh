@@ -6,3 +6,13 @@ PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin"
 CONFIG_PATH=/data/options.json
 
 echo "infinitime addon"
+
+echo "battery" 
+itctl get batt
+
+echo ""
+echo "heartrate"
+itctl get heart
+
+echo "test notification"
+itctl notify "this is a test"
