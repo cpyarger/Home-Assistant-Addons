@@ -17,7 +17,7 @@ LABEL Description="This image is used to start a script that will monitor for RF
 # First install software packages needed to compile rtl_433 and to publish MQTT events
 #
 RUN apk add --no-cache --virtual build-deps alpine-sdk cmake git bluez libusb-dev && \
-    apk add --no-cache libusb mosquitto-clients jq coreutils wget make musl-dev go git gcc usb-modeswitch dbus bluez pulseaudio-utils python3 python3-pip
+    apk add --no-cache libusb mosquitto-clients jq coreutils wget make musl-dev go git gcc usb-modeswitch dbus bluez pulseaudio-utils python3
 
 RUN pip install bluepy
 
