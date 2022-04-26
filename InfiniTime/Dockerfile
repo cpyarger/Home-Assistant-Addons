@@ -25,9 +25,8 @@ ENV GOPATH /go
 ENV PATH /go/bin:$PATH
 RUN mkdir -p ${GOPATH}/src ${GOPATH}/bin
 
-RUN git clone https://gitea.arsenm.dev/Arsen6331/itd
-RUN cd itd
-RUN make 
+RUN go get gitea.arsenm.dev/Arsen6331/itd
+
 
 COPY run.sh /
 RUN chmod a+x /run.sh
