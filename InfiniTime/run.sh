@@ -5,6 +5,8 @@ PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin"
 
 CONFIG_PATH=/data/options.json
 
+ls
+
 echo "infinitime addon"
 
 echo "battery" 
