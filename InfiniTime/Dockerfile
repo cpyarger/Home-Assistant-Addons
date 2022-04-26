@@ -17,18 +17,12 @@ LABEL Description="This image is used to start a script that will monitor for RF
 # First install software packages needed to compile rtl_433 and to publish MQTT events
 #
 RUN apk add --no-cache --virtual build-deps alpine-sdk cmake git bluez libusb-dev && \
-    apk add --no-cache libusb mosquitto-clients jq coreutils wget make musl-dev go git gcc usb-modeswitch dbus bluez pulseaudio-utils
+    apk add --no-cache libusb mosquitto-clients jq coreutils wget make musl-dev go git gcc usb-modeswitch dbus bluez pulseaudio-utils python3 python3-pip
 
-# Configure Go
-ENV GOROOT /usr/lib/go
-ENV GOPATH /go
-ENV PATH /go/bin:$PATH
-RUN mkdir -p ${GOPATH}/src ${GOPATH}/bin
-
-RUN go get go.arsenm.dev/itd
+RUN pip install bluepy
 
 RUN ls
-COPY run.sh /
-RUN chmod a+x /run.sh
+COPY run.py /
 
-CMD [ "/run.sh" ]
+
+CMD [ "python3 /run.py" ]
