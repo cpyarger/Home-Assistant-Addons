@@ -54,7 +54,7 @@ function listener {
 # Do this loop, so will restart if buffer runs out
 while true; do
 
-  if [["$AMR_IDS" != ""]]; then
+  if [ -z "$AMR_IDS" ]; then
     x="$x -filterid=$AMR_IDS"
   fi
 
