@@ -63,7 +63,7 @@ while true; do
   fi
 
   listener
-
+  x=""
   sleep $PT
 
 done

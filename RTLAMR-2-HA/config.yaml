@@ -20,7 +20,7 @@ arch:
   - i386
 options:  
   msgType: scm
-  ids: ""
+  ids: null
   duration_enable: False
   duration: 15
   pause_time: 30
