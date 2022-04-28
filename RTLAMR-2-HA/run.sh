@@ -46,7 +46,7 @@ echo -e "\n"
 }
 x=""
 function listener {
-   /go/bin/rtlamr -format json -msgtype=$AMR_MSGTYPE x| while read line
+   /go/bin/rtlamr -format json -msgtype=$AMR_MSGTYPE $x| while read line
    do
      postto
    done
@@ -55,7 +55,7 @@ function listener {
 while true; do
 
   if [["$AMR_IDS" != ""]]; then
-    x="$x -filterid=$AMR_IDS"
+    x="$x -filterid='$AMR_IDS'"
   fi
 
   if $de; then
