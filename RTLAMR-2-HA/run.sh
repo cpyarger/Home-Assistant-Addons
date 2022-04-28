@@ -44,8 +44,17 @@ http://supervisor/core/api/states/sensor.$DEVICEID
 echo -e "\n"
 
 }
+
+
 x=""
-function listener {
+  if [ ! -z "$AMR_IDS" ]; then
+    x="-filterid=$AMR_IDS"
+  fi
+
+  if $de; then
+    x="$x -duration=${DURATION}s"
+  fi
+  function listener {
    /go/bin/rtlamr -format json -msgtype=$AMR_MSGTYPE $x| while read line
    do
      postto
@@ -53,17 +62,7 @@ function listener {
 }
 # Do this loop, so will restart if buffer runs out
 while true; do
-
-  if [ -z "$AMR_IDS" ]; then
-    x="$x -filterid=$AMR_IDS"
-  fi
-
-  if $de; then
-    x="$x -duration=${DURATION}s"
-  fi
-
   listener
-  x=""
   sleep $PT
 
 done

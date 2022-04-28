@@ -16,7 +16,6 @@ A hass.io addon for a software defined radio tuned to listen for Utility Meter R
 2) Use the addon configuration page to setup:
     - msgType (RTLAMR Message type; see below)
     - ids* (IDs of the sensors you want to watch)
-    - initial_listen_time (Pause in seconds after initial startup to allow messages to buffer)
     - pause_time (Time between Readings in seconds)
 
 3) Start the addon
