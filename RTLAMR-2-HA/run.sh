@@ -21,7 +21,10 @@ echo "Duration = " $DURATION
 /usr/local/bin/rtl_tcp &
 # Sleep to fill buffer a bit
 sleep 5
-function scm+_parse {RESTDATA=$( jq -nrc --arg state "$VAL" '{"state": $state')}
+function scmplus_parse {
+  RESTDATA=$( jq -nrc --arg st "$STATE" --arg le "$LEAK" --arg ln "$LEAKNOW" --arg name "$DID" '{"state": $st, "leak": $le, "leak_now": $ln, "state_class": "total_increasing", "unit_of_measurement": "gal" }')
+
+  RESTDATA=$( jq -nrc --arg state "$VAL" '{"state": $state')}
 
 function r900_parse {
   STATE="$(echo $line | jq -rc '.Message.Consumption' | tr -s ' ' '_')"
@@ -43,7 +46,7 @@ fi
 if [ "$TYPE" = "R900" ]; then
   r900_parse
 elif [ "$TYPE" = "SCM+" ]; then
-  scm+_parse
+  scmplus_parse
 else
   RESTDATA=$( jq -nrc --arg state "$VAL" '{"state": $state')
 fi
