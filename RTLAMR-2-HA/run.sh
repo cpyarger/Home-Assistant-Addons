@@ -24,7 +24,7 @@ sleep 5
 function scmplus_parse {
   STATE="$(echo $line | jq -rc '.Message.Consumption' | tr -s ' ' '_')"
   FIXED_STATE=$(($STATE/$SCMPGD))
-  EPT= "$(echo $line | jq -rc '.Message.EndpointType' | tr -s ' ' '_')"
+  EPT="$(echo $line | jq -rc '.Message.EndpointType' | tr -s ' ' '_')"
   if [ "$EPT" = "156" ]; then
     RESTDATA=$( jq -nrc --arg state "$FIXEDSTATE" '{"state": $state, "state_class": "total_increasing", "device_class": "gas",  "unit_of_measurement": "ft³" }')
   else
