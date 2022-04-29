@@ -20,8 +20,15 @@ echo "Duration = " $DURATION
 # Starts the RTL_TCP Application
 /usr/local/bin/rtl_tcp &
 # Sleep to fill buffer a bit
-sleep 15
+sleep 5
+function scm+_parse {RESTDATA=$( jq -nrc --arg state "$VAL" '{"state": $state')}
 
+function r900_parse {
+  STATE="$(echo $line | jq -rc '.Message.Consumption' | tr -s ' ' '_')"
+  LEAK="$(echo $line | jq -rc '.Message.Leak' | tr -s ' ' '_')"
+  LEAKNOW="$(echo $line | jq -rc '.Message.LeakNow' | tr -s ' ' '_')"
+  RESTDATA=$( jq -nrc --arg st "$STATE" --arg le "$LEAK" --arg ln "$LEAKNOW" --arg name "$DID" '{"state": $st, "leak": $le, "leak_now": $ln, "state_class": "total_increasing", "unit_of_measurement": "gal" }')
+}
 # Function, posts data to home assistant that is gathered by the rtlamr script
 function postto {
   echo $line
@@ -33,8 +40,10 @@ TYPE="$(echo $line | jq -rc '.Type' | tr -s ' ' '_')"
 if [ "$DEVICEID" = "null" ]; then
   DEVICEID="$(echo $line | jq -rc '.Message.EndpointID' | tr -s ' ' '_')"
 fi
-if ($TYPE = "R900" ); then
+if [ "$TYPE" = "R900" ]; then
   r900_parse
+elif [ "$TYPE" = "SCM+" ]; then
+  scm+_parse
 else
   RESTDATA=$( jq -nrc --arg state "$VAL" '{"state": $state')
 fi
@@ -46,12 +55,6 @@ http://supervisor/core/api/states/sensor.$DEVICEID
 echo -e "\n"
 }
 
-function r900_parse {
-  STATE="$(echo $line | jq -rc '.Message.Consumption' | tr -s ' ' '_')"
-  LEAK="$(echo $line | jq -rc '.Message.Leak' | tr -s ' ' '_')"
-  LEAKNOW="$(echo $line | jq -rc '.Message.LeakNow' | tr -s ' ' '_')"
-  RESTDATA=$( jq -nrc --arg st "$STATE" --arg le "$LEAK" --arg ln "$LEAKNOW" --arg name "$DID" '{"state": $st, "leak": $le, "leak_now": $ln, "state_class": "total_increasing", "unit_of_measurement": "gal" }')
-}
 # Set flags if variables are set
 x=""
 if [ ! -z "$AMR_IDS" ]; then
