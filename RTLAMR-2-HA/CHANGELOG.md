@@ -1,6 +1,10 @@
 
 # Change Log
 All notable changes to this project will be documented in this file.
+## [0.7.17] - 2022-04-29
+### Changes
+ - add meter attributes to post 
+ 
 ## [0.7.15] - 2022-04-29
 ### Changes
  - Clean up Comments in run.sh
