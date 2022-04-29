@@ -25,11 +25,11 @@ sleep 15
 # Function, posts data to home assistant that is gathered by the rtlamr script
 function postto {
   echo $line
-VAL="$(echo $line | jq --raw-output '.Message.Consumption' | tr -s ' ' '_')" # replace ' ' with '_'
-DEVICEID="$(echo $line | jq --raw-output '.Message.ID' | tr -s ' ' '_')"
-ATTR="$(echo $line | jq --raw-output '.Message' | tr -s ' ' '_')"
+VAL="$(echo $line | jq --rc '.Message.Consumption' | tr -s ' ' '_')" # replace ' ' with '_'
+DEVICEID="$(echo $line | jq -rc '.Message.ID' | tr -s ' ' '_')"
+ATTR="$(echo $line | jq -rc '.Message' | tr -s ' ' '_')"
 if [ "$DEVICEID" = "null" ]; then
-  DEVICEID="$(echo $line | jq --raw-output '.Message.EndpointID' | tr -s ' ' '_')"
+  DEVICEID="$(echo $line | jq --rc '.Message.EndpointID' | tr -s ' ' '_')"
 fi
 RESTDATA=$( jq -nrc --arg state "$VAL" --arg attr "$ATTR"  '{"state": $state, "attributes": $attr}')
 echo -n "Sending  $RESTDATA  to http://supervisor/core/api/states/sensor.$DEVICEID -- "
