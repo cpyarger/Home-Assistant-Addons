@@ -18,13 +18,15 @@ arch:
   - amd64
   - armv7
   - i386
-options:  
+options:
+  debug: False
   msgType: scm
   ids: ""
   duration: 15
   pause_time: 30
   scm_plus_gas_divisor: 1
 schema:
+  debug: bool
   msgType: list(scm|scm+|scm+,r900|idm|netidm|r900|r900bcd|all)
   ids: str?
   duration: int

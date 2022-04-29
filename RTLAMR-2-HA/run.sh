@@ -5,6 +5,8 @@ PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin"
 
 CONFIG_PATH=/data/options.json
 # Parse the variables
+DEBUG="$(jq --raw-output '.debug' $CONFIG_PATH)"
+
 AMR_MSGTYPE="$(jq --raw-output '.msgType' $CONFIG_PATH)"
 AMR_IDS="$(jq --raw-output '.ids' $CONFIG_PATH)"
 DURATION="$(jq --raw-output '.duration' $CONFIG_PATH)"
@@ -17,6 +19,7 @@ echo "AMR Device IDs =" $AMR_IDS
 echo "Time Between Readings =" $PT
 echo "Duration = " $DURATION
 echo "SCM PLUS GAS DIVISOR = " $SCMPGD
+echo "Debug is " $DEBUG
 # Starts the RTL_TCP Application
 /usr/local/bin/rtl_tcp &
 # Sleep to fill buffer a bit
@@ -40,7 +43,9 @@ function r900_parse {
 }
 # Function, posts data to home assistant that is gathered by the rtlamr script
 function postto {
+  if ($DEBUG); then
   echo $line
+  fi
   DEVICEID="$(echo $line | jq -rc '.Message.ID' | tr -s ' ' '_')"
   TYPE="$(echo $line | jq -rc '.Type' | tr -s ' ' '_')"
   if [ "$DEVICEID" = "null" ]; then
