@@ -31,9 +31,9 @@ function scmplus_parse {
   FIXED_STATE=$(($STATE/$SCMPGD))
   EPT="$(echo $line | jq -rc '.Message.EndpointType' | tr -s ' ' '_')"
   if [ "$EPT" = "156" ]; then
-    RESTDATA=$( jq -nrc --arg state "$FIXED_STATE" --arg uid "$DEVICEID" --arg uom "$GUOM" '{"state": $state, "attributes": {"unique_id": $uid, "state_class": "total_increasing", "device_class": "gas",  "unit_of_measurement": $uom }}')
+    RESTDATA=$( jq -nrc --arg state "$FIXED_STATE" --arg uid "$DEVICEID" --arg uom "$GUOM" '{"unique_id": $uid, "state": $state, "attributes": { "state_class": "total_increasing", "device_class": "gas",  "unit_of_measurement": $uom }}')
   else
-    RESTDATA=$( jq -nrc --arg state "$STATE"--arg uid "$DEVICEID" '{"state": $state, "attributes": {"unique_id": $uid}}')
+    RESTDATA=$( jq -nrc --arg state "$STATE"--arg uid "$DEVICEID" '{"unique_id": $uid, "state": $state, "attributes": {"unique_id": $uid}}')
   fi
   }
 
@@ -41,7 +41,7 @@ function r900_parse {
   STATE="$(echo $line | jq -rc '.Message.Consumption' | tr -s ' ' '_')"
   LEAK="$(echo $line | jq -rc '.Message.Leak' | tr -s ' ' '_')"
   LEAKNOW="$(echo $line | jq -rc '.Message.LeakNow' | tr -s ' ' '_')"
-  RESTDATA=$( jq -nrc --arg st "$STATE" --arg le "$LEAK" --arg ln "$LEAKNOW" --arg uid "$DEVICEID" '{ "state": $st, "attributes": {"unique_id": $uid, "leak": $le, "leak_now": $ln, "state_class": "total_increasing", "unit_of_measurement": "gal" }}')
+  RESTDATA=$( jq -nrc --arg st "$STATE" --arg le "$LEAK" --arg ln "$LEAKNOW" --arg uid "$DEVICEID" '{"unique_id": $uid, "state": $st, "attributes": {"unique_id": $uid, "leak": $le, "leak_now": $ln, "state_class": "total_increasing", "unit_of_measurement": "gal" }}')
 }
 # Function, posts data to home assistant that is gathered by the rtlamr script
 function postto {
