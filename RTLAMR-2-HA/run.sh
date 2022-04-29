@@ -9,21 +9,27 @@ AMR_MSGTYPE="$(jq --raw-output '.msgType' $CONFIG_PATH)"
 AMR_IDS="$(jq --raw-output '.ids' $CONFIG_PATH)"
 DURATION="$(jq --raw-output '.duration' $CONFIG_PATH)"
 PT="$(jq --raw-output '.pause_time' $CONFIG_PATH)"
-
+SCMPGD="$(jq --raw-output '.scm_plus_gas_divisor' $CONFIG_PATH)"
 # Print the set variables to the log
 echo "Starting RTLAMR with parameters:"
 echo "AMR Message Type =" $AMR_MSGTYPE
 echo "AMR Device IDs =" $AMR_IDS
 echo "Time Between Readings =" $PT
 echo "Duration = " $DURATION
-
+echo "SCM PLUS GAS DIVISOR = " $SCMPGD
 # Starts the RTL_TCP Application
 /usr/local/bin/rtl_tcp &
 # Sleep to fill buffer a bit
 sleep 5
 function scmplus_parse {
   STATE="$(echo $line | jq -rc '.Message.Consumption' | tr -s ' ' '_')"
-  RESTDATA=$( jq -nrc --arg state "$STATE" '{"state": $state')
+  FIXED_STATE=$(($STATE/$SCMPGD))
+  EPT= "$(echo $line | jq -rc '.Message.EndpointType' | tr -s ' ' '_')"
+  if [ "$EPT" = "156" ]; then
+    RESTDATA=$( jq -nrc --arg state "$FIXEDSTATE" '{"state": $state, "state_class": "total_increasing", "device_class": "gas",  "unit_of_measurement": "ft³" }')
+  else
+    RESTDATA=$( jq -nrc --arg state "$STATE" '{"state": $state }')
+  fi
   }
 
 function r900_parse {
