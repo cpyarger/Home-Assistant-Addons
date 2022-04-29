@@ -1,4 +1,4 @@
-# RTLAMR to Home Assistant API Bridge hass.io addon
+# SDR Meter Reader hass.io addon
 A hass.io addon for a software defined radio tuned to listen for Utility Meter RF transmissions and republish the data via Home Assistant's API
 
 - This hassio addon is based on  JDeath's [RTLAMR2MQTT](https://github.com/jdeath/RTLAMR2MQQT/tree/master/RTLAMR2MQQT) addon
@@ -10,7 +10,7 @@ A hass.io addon for a software defined radio tuned to listen for Utility Meter R
 ## Usage
 
 1) Install the addon. Do this by either:
-    - Downloading this repository and adding in a folder under /addons/ (eg. /addons/rtlamr2ha)
+    - Downloading this repository and adding in a folder under /addons/ (eg. /addons/sdrmr)
     - Adding this respository to the Add-on Store
 
 2) Use the addon configuration page to setup:
