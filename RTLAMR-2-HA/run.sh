@@ -11,6 +11,7 @@ AMR_MSGTYPE="$(jq --raw-output '.msgType' $CONFIG_PATH)"
 AMR_IDS="$(jq --raw-output '.ids' $CONFIG_PATH)"
 DURATION="$(jq --raw-output '.duration' $CONFIG_PATH)"
 PT="$(jq --raw-output '.pause_time' $CONFIG_PATH)"
+GUOM="$(jq --raw-output '.gas_unit_of_measurement' $CONFIG_PATH)"
 SCMPGD="$(jq --raw-output '.scm_plus_gas_divisor' $CONFIG_PATH)"
 # Print the set variables to the log
 echo "Starting RTLAMR with parameters:"
@@ -18,6 +19,7 @@ echo "AMR Message Type =" $AMR_MSGTYPE
 echo "AMR Device IDs =" $AMR_IDS
 echo "Time Between Readings =" $PT
 echo "Duration = " $DURATION
+echo "Gas Unit of measurement = " $GUOM
 echo "SCM PLUS GAS DIVISOR = " $SCMPGD
 echo "Debug is " $DEBUG
 # Starts the RTL_TCP Application
@@ -29,7 +31,7 @@ function scmplus_parse {
   FIXED_STATE=$(($STATE/$SCMPGD))
   EPT="$(echo $line | jq -rc '.Message.EndpointType' | tr -s ' ' '_')"
   if [ "$EPT" = "156" ]; then
-    RESTDATA=$( jq -nrc --arg state "$FIXED_STATE" --arg uid "$DEVICEID" '{"state": $state, "attributes": {"unique_id": $uid, "state_class": "total_increasing", "device_class": "gas",  "unit_of_measurement": "ft³" }}')
+    RESTDATA=$( jq -nrc --arg state "$FIXED_STATE" --arg uid "$DEVICEID" --arg uom = "$GUOM" '{"state": $state, "attributes": {"unique_id": $uid, "state_class": "total_increasing", "device_class": "gas",  "unit_of_measurement": $uom }}')
   else
     RESTDATA=$( jq -nrc --arg state "$STATE"--arg uid "$DEVICEID" '{"state": $state, "attributes": {"unique_id": $uid}}')
   fi

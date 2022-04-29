@@ -1,6 +1,13 @@
 
 # Change Log
 All notable changes to this project will be documented in this file.
+## [0.8.0] - 2022-04-29
+### Changes
+ - Added capability for automatically adding R900 Water Meters
+ - Added capability for automatically adding SCM+ Gas meters with Endpoint Type 156
+ - Added Gas Unit of measurement selector
+ - Added SCM+ Gas Divisor (defaults to 1
+ 
 ## [0.7.17] - 2022-04-29
 ### Changes
  - add meter attributes to post 
