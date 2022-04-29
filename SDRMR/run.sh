@@ -41,7 +41,20 @@ function r900_parse {
   STATE="$(echo $line | jq -rc '.Message.Consumption' | tr -s ' ' '_')"
   LEAK="$(echo $line | jq -rc '.Message.Leak' | tr -s ' ' '_')"
   LEAKNOW="$(echo $line | jq -rc '.Message.LeakNow' | tr -s ' ' '_')"
-  RESTDATA=$( jq -nrc --arg st "$STATE" --arg le "$LEAK" --arg ln "$LEAKNOW" --arg uid "$DEVICEID" '{"unique_id": $uid, "state": $st, "attributes": {"unique_id": $uid, "leak": $le, "leak_now": $ln, "state_class": "total_increasing", "unit_of_measurement": "gal" }}')
+  BACKFLOW="$(echo $line | jq -rc '.Message.BackFlow' | tr -s ' ' '_')"
+  UNKN1="$(echo $line | jq -rc '.Message.Unkn1' | tr -s ' ' '_')"
+  UNKN3="$(echo $line | jq -rc '.Message.Unkn3' | tr -s ' ' '_')"
+  NOUSE="$(echo $line | jq -rc '.Message.NoUse' | tr -s ' ' '_')"
+  RESTDATA=$( jq -nrc \
+  --arg st "$STATE" \
+  --arg le "$LEAK" \
+  --arg ln "$LEAKNOW" \
+  --arg uid "$DEVICEID" \
+  --arg bf "$BACKFLOW" \
+  --arg unkn1 "$UNKN1" \
+  --arg unkn3 "$UNKN3" \
+  --arg nouse "$NOUSE" \
+  '{"unique_id": $uid, "state": $st, "attributes": {"unique_id": $uid-sdrmr, "entity_id": $uid "state_class": "total_increasing", "unit_of_measurement": "gal", "leak": $le, "leak_now": $ln, "BackFlow": $bf, "NoUse": $nouse "Unknown 1": $UNKN1, "Unknown 3": $UNKN3 }}')
 }
 # Function, posts data to home assistant that is gathered by the rtlamr script
 function postto {
