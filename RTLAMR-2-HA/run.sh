@@ -28,10 +28,16 @@ function postto {
 VAL="$(echo $line | jq -rc '.Message.Consumption' | tr -s ' ' '_')" # replace ' ' with '_'
 DEVICEID="$(echo $line | jq -rc '.Message.ID' | tr -s ' ' '_')"
 ATTR="$(echo $line | jq -rc '.Message' | tr -s ' ' '_')"
+TYPE="$(echo $line | jq -rc '.Type' | tr -s ' ' '_')"
+
 if [ "$DEVICEID" = "null" ]; then
   DEVICEID="$(echo $line | jq -rc '.Message.EndpointID' | tr -s ' ' '_')"
 fi
-RESTDATA=$( jq -nrc --arg state "$VAL" --arg attr "$ATTR"  '{"state": $state, "attributes": $attr}')
+if ($TYPE = "R900" ); then
+  r900_parse
+else
+  RESTDATA=$( jq -nrc --arg state "$VAL" '{"state": $state')
+fi
 echo -n "Sending  $RESTDATA  to http://supervisor/core/api/states/sensor.$DEVICEID -- "
 curl -s -o /dev/null -w "%{http_code}" -X POST -H "Authorization: Bearer $SUPERVISOR_TOKEN" \
 -H "Content-Type: application/json" \
@@ -40,6 +46,12 @@ http://supervisor/core/api/states/sensor.$DEVICEID
 echo -e "\n"
 }
 
+function r900_parse {
+  STATE="$(echo $line | jq -rc '.Message.Consumption' | tr -s ' ' '_')"
+  LEAK="$(echo $line | jq -rc '.Message.Leak' | tr -s ' ' '_')"
+  LEAKNOW="$(echo $line | jq -rc '.Message.LeakNow' | tr -s ' ' '_')"
+  RESTDATA=$( jq -nrc --arg st "$STATE" --arg le "$LEAK" --arg ln "$LEAKNOW" --arg name "$DID" '{"state": $st, "leak": $le, "leak_now": $ln, "state_class": "total_increasing", "unit_of_measurement": "gal" }')
+}
 # Set flags if variables are set
 x=""
 if [ ! -z "$AMR_IDS" ]; then
