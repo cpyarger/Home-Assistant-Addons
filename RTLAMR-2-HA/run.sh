@@ -30,7 +30,7 @@ DEVICEID="$(echo $line | jq --raw-output '.Message.ID' | tr -s ' ' '_')"
 if [ "$DEVICEID" = "null" ]; then
   DEVICEID="$(echo $line | jq --raw-output '.Message.EndpointID' | tr -s ' ' '_')"
 fi
-RESTDATA=$( jq -nrc --arg state "$VAL" '{state: $state}')
+RESTDATA=$( jq -nrc --arg state "$VAL" --arg attr "$line"  '{state: $state, attributes: $attr}')
 echo -n "Sending  $RESTDATA  to http://supervisor/core/api/states/sensor.$DEVICEID -- "
 curl -s -o /dev/null -w "%{http_code}" -X POST -H "Authorization: Bearer $SUPERVISOR_TOKEN" \
 -H "Content-Type: application/json" \
