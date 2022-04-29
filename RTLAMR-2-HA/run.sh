@@ -26,7 +26,7 @@ function scmplus_parse {
   FIXED_STATE=$(($STATE/$SCMPGD))
   EPT="$(echo $line | jq -rc '.Message.EndpointType' | tr -s ' ' '_')"
   if [ "$EPT" = "156" ]; then
-    RESTDATA=$( jq -nrc --arg state "$FIXEDSTATE" '{"state": $state, "state_class": "total_increasing", "device_class": "gas",  "unit_of_measurement": "ft³" }')
+    RESTDATA=$( jq -nrc --arg state "$FIXED_STATE" '{"state": $state, "state_class": "total_increasing", "device_class": "gas",  "unit_of_measurement": "ft³" }')
   else
     RESTDATA=$( jq -nrc --arg state "$STATE" '{"state": $state }')
   fi
@@ -36,7 +36,7 @@ function r900_parse {
   STATE="$(echo $line | jq -rc '.Message.Consumption' | tr -s ' ' '_')"
   LEAK="$(echo $line | jq -rc '.Message.Leak' | tr -s ' ' '_')"
   LEAKNOW="$(echo $line | jq -rc '.Message.LeakNow' | tr -s ' ' '_')"
-  RESTDATA=$( jq -nrc --arg st $STATE --arg le $LEAK --arg ln $LEAKNOW  '{"state": $st, "leak": $le, "leak_now": $ln, "state_class": "total_increasing", "unit_of_measurement": "gal" }')
+  RESTDATA=$( jq -nrc --arg st "$STATE" --arg le "$LEAK" --arg ln "$LEAKNOW" '{"state": $st, "leak": $le, "leak_now": $ln, "state_class": "total_increasing", "unit_of_measurement": "gal" }')
 }
 # Function, posts data to home assistant that is gathered by the rtlamr script
 function postto {
