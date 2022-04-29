@@ -22,9 +22,9 @@ echo "Duration = " $DURATION
 # Sleep to fill buffer a bit
 sleep 5
 function scmplus_parse {
-  RESTDATA=$( jq -nrc --arg st "$STATE" --arg le "$LEAK" --arg ln "$LEAKNOW" --arg name "$DID" '{"state": $st, "leak": $le, "leak_now": $ln, "state_class": "total_increasing", "unit_of_measurement": "gal" }')
-
-  RESTDATA=$( jq -nrc --arg state "$VAL" '{"state": $state')}
+  STATE="$(echo $line | jq -rc '.Message.Consumption' | tr -s ' ' '_')"
+  RESTDATA=$( jq -nrc --arg state "$STATE" '{"state": $state')
+  }
 
 function r900_parse {
   STATE="$(echo $line | jq -rc '.Message.Consumption' | tr -s ' ' '_')"
@@ -35,27 +35,26 @@ function r900_parse {
 # Function, posts data to home assistant that is gathered by the rtlamr script
 function postto {
   echo $line
-VAL="$(echo $line | jq -rc '.Message.Consumption' | tr -s ' ' '_')" # replace ' ' with '_'
-DEVICEID="$(echo $line | jq -rc '.Message.ID' | tr -s ' ' '_')"
-ATTR="$(echo $line | jq -rc '.Message' | tr -s ' ' '_')"
-TYPE="$(echo $line | jq -rc '.Type' | tr -s ' ' '_')"
+  DEVICEID="$(echo $line | jq -rc '.Message.ID' | tr -s ' ' '_')"
+  TYPE="$(echo $line | jq -rc '.Type' | tr -s ' ' '_')"
+  if [ "$DEVICEID" = "null" ]; then
+    DEVICEID="$(echo $line | jq -rc '.Message.EndpointID' | tr -s ' ' '_')"
+  fi
 
-if [ "$DEVICEID" = "null" ]; then
-  DEVICEID="$(echo $line | jq -rc '.Message.EndpointID' | tr -s ' ' '_')"
-fi
-if [ "$TYPE" = "R900" ]; then
-  r900_parse
-elif [ "$TYPE" = "SCM+" ]; then
-  scmplus_parse
-else
-  RESTDATA=$( jq -nrc --arg state "$VAL" '{"state": $state')
-fi
-echo -n "Sending  $RESTDATA  to http://supervisor/core/api/states/sensor.$DEVICEID -- "
-curl -s -o /dev/null -w "%{http_code}" -X POST -H "Authorization: Bearer $SUPERVISOR_TOKEN" \
--H "Content-Type: application/json" \
--d $RESTDATA \
-http://supervisor/core/api/states/sensor.$DEVICEID
-echo -e "\n"
+  if [ "$TYPE" = "R900" ]; then
+    r900_parse
+  elif [ "$TYPE" = "SCM+" ]; then
+    scmplus_parse
+  else
+    VAL="$(echo $line | jq -rc '.Message.Consumption' | tr -s ' ' '_')" # replace ' ' with '_'
+    RESTDATA=$( jq -nrc --arg state "$VAL" '{"state": $state')
+  fi
+  echo -n "Sending  $RESTDATA  to http://supervisor/core/api/states/sensor.$DEVICEID -- "
+  curl -s -o /dev/null -w "%{http_code}" -X POST -H "Authorization: Bearer $SUPERVISOR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d $RESTDATA \
+  http://supervisor/core/api/states/sensor.$DEVICEID
+  echo -e "\n"
 }
 
 # Set flags if variables are set
