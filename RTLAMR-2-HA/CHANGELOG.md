@@ -1,6 +1,9 @@
 
 # Change Log
 All notable changes to this project will be documented in this file.
+## [0.7.14] - 2022-04-28
+### Changes
+ - Fix issues regarding using an id
 ## [0.7.6] - 2022-04-17
 ### Changes
 - Added read duration option
