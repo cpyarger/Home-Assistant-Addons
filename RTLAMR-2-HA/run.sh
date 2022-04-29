@@ -29,9 +29,9 @@ function scmplus_parse {
   FIXED_STATE=$(($STATE/$SCMPGD))
   EPT="$(echo $line | jq -rc '.Message.EndpointType' | tr -s ' ' '_')"
   if [ "$EPT" = "156" ]; then
-    RESTDATA=$( jq -nrc --arg state "$FIXED_STATE" --arg uid "$DEVICEID" '{"state": $state, "attributes": {"unique_id": $uid, "state_class": "total_increasing", "device_class": "gas",  "unit_of_measurement": "ft³" }')
+    RESTDATA=$( jq -nrc --arg state "$FIXED_STATE" --arg uid "$DEVICEID" '{"state": $state, "attributes": {"unique_id": $uid, "state_class": "total_increasing", "device_class": "gas",  "unit_of_measurement": "ft³" }}')
   else
-    RESTDATA=$( jq -nrc --arg state "$STATE"--arg uid "$DEVICEID" '{"state": $state, "attributes": {"unique_id": $uid} }')
+    RESTDATA=$( jq -nrc --arg state "$STATE"--arg uid "$DEVICEID" '{"state": $state, "attributes": {"unique_id": $uid}}')
   fi
   }
 
