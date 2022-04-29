@@ -25,7 +25,7 @@ sleep 15
 # Function, posts data to home assistant that is gathered by the rtlamr script
 function postto {
   echo $line
-VAL="$(echo $line | jq --rc '.Message.Consumption' | tr -s ' ' '_')" # replace ' ' with '_'
+VAL="$(echo $line | jq -rc '.Message.Consumption' | tr -s ' ' '_')" # replace ' ' with '_'
 DEVICEID="$(echo $line | jq -rc '.Message.ID' | tr -s ' ' '_')"
 ATTR="$(echo $line | jq -rc '.Message' | tr -s ' ' '_')"
 if [ "$DEVICEID" = "null" ]; then
