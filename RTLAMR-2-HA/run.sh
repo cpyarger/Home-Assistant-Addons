@@ -36,7 +36,7 @@ function r900_parse {
   STATE="$(echo $line | jq -rc '.Message.Consumption' | tr -s ' ' '_')"
   LEAK="$(echo $line | jq -rc '.Message.Leak' | tr -s ' ' '_')"
   LEAKNOW="$(echo $line | jq -rc '.Message.LeakNow' | tr -s ' ' '_')"
-  RESTDATA=$( jq -nrc --arg st "$STATE" --arg le "$LEAK" --arg ln "$LEAKNOW" --arg name "$DID" '{"state": $st, "leak": $le, "leak_now": $ln, "state_class": "total_increasing", "unit_of_measurement": "gal" }')
+  RESTDATA=$( jq -nrc --arg st $STATE --arg le $LEAK --arg ln $LEAKNOW  '{"state": $st, "leak": $le, "leak_now": $ln, "state_class": "total_increasing", "unit_of_measurement": "gal" }')
 }
 # Function, posts data to home assistant that is gathered by the rtlamr script
 function postto {
