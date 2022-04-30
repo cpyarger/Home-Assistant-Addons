@@ -26,11 +26,17 @@ echo "Debug is " $DEBUG
 /usr/local/bin/rtl_tcp &
 # Sleep to fill buffer a bit
 sleep 5
+function is_gas() {
+    LIST="00, 01, 02, 09, 12, 156"
+    DELIMITER=","
+    VALUE=$1
+    [[ "$LIST" =~ ($DELIMITER|^)$VALUE($DELIMITER|$) ]]
+}
 function scmplus_parse {
   STATE="$(echo $line | jq -rc '.Message.Consumption' | tr -s ' ' '_')"
   FIXED_STATE=$(($STATE/$SCMPGD))
   EPT="$(echo $line | jq -rc '.Message.EndpointType' | tr -s ' ' '_')"
-  if [ "$EPT" = "156" ]; then
+  if is_gas $EPT; then
     RESTDATA=$( jq -nrc --arg state "$FIXED_STATE" --arg uid "$DEVICEID" --arg uom "$GUOM" '{"unique_id": $uid, "state": $state, "attributes": { "state_class": "total_increasing", "device_class": "gas",  "unit_of_measurement": $uom }}')
   else
     RESTDATA=$( jq -nrc --arg state "$STATE"--arg uid "$DEVICEID" '{"unique_id": $uid, "state": $state, "attributes": {"unique_id": $uid}}')
