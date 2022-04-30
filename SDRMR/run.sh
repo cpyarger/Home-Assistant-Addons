@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 export LD_LIBRARY_PATH=/usr/local/lib64
 export LANG=C
 PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin"
@@ -32,19 +32,19 @@ echo "Debug is " $DEBUG
 # Sleep to fill buffer a bit
 sleep 5
 function is_gas() {
-    LIST="00, 01, 02, 09, 156"
+    LIST="00,01,02,09,156"
     DELIMITER=","
     VALUE=$1
     [[ "$LIST" =~ ($DELIMITER|^)$VALUE($DELIMITER|$) ]]
 }
 function is_electric() {
-    LIST="04, 05, 07, 08"
+    LIST="04,05,07,08"
     DELIMITER=","
     VALUE=$1
     [[ "$LIST" =~ ($DELIMITER|^)$VALUE($DELIMITER|$) ]]
 }
 function is_water() {
-    LIST="03, 11, 13"
+    LIST="03,11,13"
     DELIMITER=","
     VALUE=$1
     [[ "$LIST" =~ ($DELIMITER|^)$VALUE($DELIMITER|$) ]]
