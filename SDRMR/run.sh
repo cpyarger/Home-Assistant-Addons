@@ -54,7 +54,7 @@ function r900_parse {
   --arg unkn1 "$UNKN1" \
   --arg unkn3 "$UNKN3" \
   --arg nouse "$NOUSE" \
-  '{"state": $st, "attributes": {"unique_id": $uid, "entity_id": $uid "state_class": "total_increasing", "unit_of_measurement": "gal", "leak": $le, "leak_now": $ln, "BackFlow": $bf, "NoUse": $nouse "Unknown 1": $UNKN1, "Unknown 3": $UNKN3 }}')
+  '{"state": $st, "attributes": {"unique_id": $uid, "entity_id": $uid "state_class": "total_increasing", "unit_of_measurement": "gal", "leak": $le, "leak_now": $ln, "BackFlow": $bf, "NoUse": $nouse, "Unknown 1": $UNKN1, "Unknown 3": $UNKN3 }}')
 }
 # Function, posts data to home assistant that is gathered by the rtlamr script
 function postto {
