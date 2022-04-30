@@ -54,14 +54,15 @@ function scmplus_parse {
   STATE="$(echo $line | jq -rc '.Message.Consumption' | tr -s ' ' '_')"
   FIXED_STATE=$(($STATE/$SCMPGD))
   EPT="$(echo $line | jq -rc '.Message.EndpointType' | tr -s ' ' '_')"
+  UID=$DEVICEID-sdrmr
   if is_gas $EPT; then
-    RESTDATA=$( jq -nrc --arg state "$FIXED_STATE" --arg uid "$DEVICEID" --arg uom "$GUOM" '{"unique_id": $uid, "state": $state, "attributes": { "state_class": "total_increasing", "device_class": "gas",  "unit_of_measurement": $uom }}')
+    RESTDATA=$( jq -nrc --arg state "$FIXED_STATE" --arg uid "$UID" --arg uom "$GUOM" '{"state": $state, "attributes": {"unique_id": $uid, "state_class": "total_increasing", "device_class": "gas",  "unit_of_measurement": $uom }}')
   elif is_electric $EPT; then
-    RESTDATA=$( jq -nrc --arg state "$STATE"--arg uid "$DEVICEID" --arg uom "$GUOM" '{"unique_id": $uid, "state": $state, "attributes": {"unique_id": $uid, "device_class": "energy", "unit_of_measurement": $uom }}')
+    RESTDATA=$( jq -nrc --arg state "$STATE" --arg uid "$UID" --arg uom "$EUOM" '{"state": $state, "attributes": {"unique_id": $uid, "device_class": "energy", "unit_of_measurement": $uom }}')
   elif is_water $EPT; then
-    RESTDATA=$( jq -nrc --arg state "$STATE"--arg uid "$DEVICEID" --arg uom "$WUOM"'{"unique_id": $uid, "state": $state, "attributes": {"unique_id": $uid}, "unit_of_measurement": $uom }')
+    RESTDATA=$( jq -nrc --arg state "$STATE" --arg uid "$UID" --arg uom "$WUOM"'{"state": $state, "attributes": {"unique_id": $uid}, "unit_of_measurement": $uom }')
   else
-    RESTDATA=$( jq -nrc --arg state "$STATE"--arg uid "$DEVICEID" '{"unique_id": $uid, "state": $state, "attributes": {"unique_id": $uid}}')
+    RESTDATA=$( jq -nrc --arg state "$STATE" --arg uid "$UID" '{"state": $state, "attributes": {"unique_id": $uid}}')
   fi
   }
 
