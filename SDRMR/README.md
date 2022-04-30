@@ -53,3 +53,8 @@ Then run the following command on the host
 ```bash
 sudo rmmod dvb_usb_rtl28xxu rtl2832
 ```
+
+## Posting a bug report, or adding more data from your meters. 
+I only have a couple meters on my house, so I don't have example data to get all the sensors right, 
+
+If you need me to make any changes please turn on debug mode in the config, and post a snippit of your logs to a github issue
