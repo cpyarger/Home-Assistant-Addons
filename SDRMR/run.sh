@@ -98,7 +98,7 @@ function postto {
 
   if [ "$TYPE" = "R900" ]; then
     r900_parse
-  elif [ "$TYPE" = "SCM+" ]; then
+  elif [ "$TYPE" = "SCM+" || "$TYPE" = "SCM" ]; then
     scmplus_parse
   else
     VAL="$(echo $line | jq -rc '.Message.Consumption' | tr -s ' ' '_')" # replace ' ' with '_'

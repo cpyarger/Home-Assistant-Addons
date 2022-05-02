@@ -1,6 +1,11 @@
 
 # Change Log
 All notable changes to this project will be documented in this file.
+
+## [0.8.15] - 2022-05-1
+### Changes
+ - Added SCM Messages to the SCM+ parsing
+
 ## [0.8.0] - 2022-04-29
 ### Changes
  - Added capability for automatically adding R900 Water Meters
