@@ -54,6 +54,9 @@ function scmplus_parse {
   STATE="$(echo $line | jq -rc '.Message.Consumption' | tr -s ' ' '_')"
   FIXED_STATE=$(($STATE/$SCMPGD))
   EPT="$(echo $line | jq -rc '.Message.EndpointType' | tr -s ' ' '_')"
+  if [ "$EPT" = "null" ]; then
+    EPT="$(echo $line | jq -rc '.Message.Type' | tr -s ' ' '_')"
+  fi
   scmUID=$DEVICEID-sdrmr
   if is_gas $EPT; then
     RESTDATA=$( jq -nrc --arg state "$FIXED_STATE" --arg uid "$scmUID" --arg uom "$GUOM" '{"state": $state, "attributes": {"unique_id": $uid, "state_class": "total_increasing", "device_class": "gas",  "unit_of_measurement": $uom }}')
