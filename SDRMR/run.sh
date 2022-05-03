@@ -28,7 +28,11 @@ echo "Water Unit of measurement = " $WUOM
 echo "SCM PLUS GAS DIVISOR = " $SCMPGD
 echo "Debug is " $DEBUG
 # Starts the RTL_TCP Application
-/usr/local/bin/rtl_tcp > /dev/null &
+if ($DEBUG); then
+  /usr/local/bin/rtl_tcp &
+else
+  /usr/local/bin/rtl_tcp > /dev/null &
+fi
 # Sleep to fill buffer a bit
 sleep 5
 function is_gas() {
