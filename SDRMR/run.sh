@@ -28,26 +28,23 @@ echo "Water Unit of measurement = " $WUOM
 echo "SCM PLUS GAS DIVISOR = " $SCMPGD
 echo "Debug is " $DEBUG
 # Starts the RTL_TCP Application
-/usr/local/bin/rtl_tcp &
+/usr/local/bin/rtl_tcp > /dev/null &
 # Sleep to fill buffer a bit
 sleep 5
 function is_gas() {
-    LIST="00,01,02,09,156"
-    DELIMITER=","
+    LIST=(0 1 2 9 156)
     VALUE=$1
-    [[ "$LIST" =~ ($DELIMITER|^)$VALUE($DELIMITER|$) ]]
+    [[ ${LIST[@]} =~ $VALUE ]]
 }
 function is_electric() {
-    LIST="04,05,07,08"
-    DELIMITER=","
+    LIST=(4 5 7 8)
     VALUE=$1
-    [[ "$LIST" =~ ($DELIMITER|^)$VALUE($DELIMITER|$) ]]
+    [[ ${LIST[@]} =~ $VALUE ]]
 }
 function is_water() {
-    LIST="03,11,13"
-    DELIMITER=","
+    LIST=(3 11 13)
     VALUE=$1
-    [[ "$LIST" =~ ($DELIMITER|^)$VALUE($DELIMITER|$) ]]
+    [[ ${LIST[@]} =~ $VALUE ]]
 }
 
 function scmplus_parse {
