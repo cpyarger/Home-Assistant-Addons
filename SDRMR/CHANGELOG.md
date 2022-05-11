@@ -2,6 +2,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+
+## [0.8.24] - 2022-05-11
+### Changes
+ - Fixed wrong spacing in is_water parsing
+ 
 ## [0.8.15] - 2022-05-1
 ### Changes
  - Added SCM Messages to the SCM+ parsing

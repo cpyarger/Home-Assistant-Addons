@@ -65,7 +65,7 @@ function scmplus_parse {
   elif is_electric $EPT; then
     RESTDATA=$( jq -nrc --arg state "$STATE" --arg uid "$scmUID" --arg uom "$EUOM" '{"state": $state, "attributes": {"unique_id": $uid, "device_class": "energy", "unit_of_measurement": $uom, "state_class": "total_increasing" }}')
   elif is_water $EPT; then
-    RESTDATA=$( jq -nrc --arg state "$STATE" --arg uid "$scmUID" --arg uom "$WUOM"'{"state": $state, "attributes": {"unique_id": $uid}, "unit_of_measurement": $uom }')
+    RESTDATA=$( jq -nrc --arg state "$STATE" --arg uid "$scmUID" --arg uom "$WUOM" '{"state": $state, "attributes": {"unique_id": $uid}, "unit_of_measurement": $uom }')
   else
     RESTDATA=$( jq -nrc --arg state "$STATE" --arg uid "$scmUID" '{"state": $state, "attributes": {"unique_id": $uid}}')
   fi
@@ -109,7 +109,8 @@ function postto {
     VAL="$(echo $line | jq -rc '.Message.Consumption' | tr -s ' ' '_')" # replace ' ' with '_'
     RESTDATA=$( jq -nrc --arg state "$VAL" '{"state": $state}')
   fi
-  echo -n "Sending  $RESTDATA  to http://supervisor/core/api/states/sensor.$DEVICEID -- "
+
+
   curl -s -o /dev/null -w "%{http_code}" -X POST -H "Authorization: Bearer $SUPERVISOR_TOKEN" \
   -H "Content-Type: application/json" \
   -d $RESTDATA \
