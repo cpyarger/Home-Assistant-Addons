@@ -125,7 +125,7 @@ if [ ! -z "$AMR_IDS" ]; then
   x="-filterid=$AMR_IDS"
 fi
 
-if $DURATION; then
+if ${DURATION}; then
   x="$x -duration=${DURATION}s"
 fi
 # Function, runs a rtlamr listen event
