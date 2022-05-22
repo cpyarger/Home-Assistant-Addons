@@ -7,6 +7,7 @@ startup: application
 boot: auto
 homeassistant_api: True
 auth_api: True
+init: false
 map: 
   - config:rw 
   - ssl
