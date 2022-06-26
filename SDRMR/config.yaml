@@ -22,17 +22,20 @@ arch:
   - i386
 options:
   debug: False
+  rtltcpdebug: False
   msgType: scm
   ids: ""
   duration: 15
   pause_time: 30
   gas_unit_of_measurement: ft³
-  electric_unit_of_measurement: Wh
+  electric_unit_of_measurement: kWh
   water_unit_of_measurement: gal
+  water_use_tenths: False
 
   scm_plus_gas_divisor: 1
 schema:
   debug: bool
+  rtltcpdebug: bool
   msgType: list(scm|scm+|scm+,r900|idm|netidm|r900|r900bcd|all)
   ids: str?
   duration: int
@@ -40,6 +43,7 @@ schema:
   gas_unit_of_measurement: list(ft³|m³)
   electric_unit_of_measurement: list(Wh|kWh|MWh)
   water_unit_of_measurement: list(gal|l)
+  water_use_tenths: bool
   scm_plus_gas_divisor: int?
 
 
