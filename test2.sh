@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bashio
+#!/usr/bin/bash
 
 export LD_LIBRARY_PATH=/usr/local/lib64
 export LANG=C
@@ -7,19 +7,15 @@ PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin"
 CONFIG_PATH=/data/options.json
 
 # Parse the variables
-DEBUG="$(jq --raw-output '.debug' $CONFIG_PATH)"
-RTLTCPDEBUG="$(jq --raw-output '.rtltcpdebug' $CONFIG_PATH)"
+DEBUG=true
 
-AMR_MSGTYPE="$(jq --raw-output '.msgType' $CONFIG_PATH)"
-AMR_IDS="$(jq --raw-output '.ids' $CONFIG_PATH)"
-DURATION="$(jq --raw-output '.duration' $CONFIG_PATH)"
-PT="$(jq --raw-output '.pause_time' $CONFIG_PATH)"
-GUOM="$(jq --raw-output '.gas_unit_of_measurement' $CONFIG_PATH)"
-EUOM="$(jq --raw-output '.electric_unit_of_measurement' $CONFIG_PATH)"
-WUOM="$(jq --raw-output '.water_unit_of_measurement' $CONFIG_PATH)"
-WTEN="$(jq --raw-output '.water_use_tenths' $CONFIG_PATH)"
+AMR_MSGTYPE="ALL"
+GUOM="ft3"
+EUOM="kWh"
+WUOM="gal"
+WTEN=true
 
-SCMPGD="$(jq --raw-output '.scm_plus_gas_divisor' $CONFIG_PATH)"
+SCMPGD="1"
 
 # Print the set variables to the log
 echo "Starting RTLAMR with parameters:"
@@ -34,15 +30,6 @@ echo "Water measurements provided in tenths = " $WTEN
 echo "SCM PLUS GAS DIVISOR = " $SCMPGD
 echo "Debug is " $DEBUG
 
-# Starts the RTL_TCP Application
-if ($RTLTCPDEBUG); then
-  /usr/local/bin/rtl_tcp &
-else
-  /usr/local/bin/rtl_tcp > /dev/null &
-fi
-
-# Sleep to fill buffer a bit
-sleep 5
 function is_gas() {
     LIST=(0 1 2 9 12 156)
     VALUE=$1
@@ -109,8 +96,7 @@ function tenths {
 # Function, posts data to home assistant that is gathered by the rtlamr script
 function postto {
   if ($DEBUG); then
-    echo -e "\n\nRTLAMR JSON Output\n"
-    echo $line
+  echo $line
   fi
   DEVICEID="$(echo $line | jq -rc '.Message.ID' | tr -s ' ' '_')"
   TYPE="$(echo $line | jq -rc '.Type' | tr -s ' ' '_')"
@@ -126,24 +112,15 @@ function postto {
     VAL="$(echo $line | jq -rc '.Message.Consumption' | tr -s ' ' '_')" # replace ' ' with '_'
     RESTDATA=$( jq -nrc --arg state "$VAL" '{"state": $state}')
   fi
-  
-  # if water meter and tenths
+
   if  [ "$TYPE" = "R900" ] || is_water $EPT; then
     if $WTEN; then
       tenths
     fi
   fi
-  
-  if ($DEBUG); then
-    echo -e "\n\nJSON Output to HA REST API\n"
-    echo $RESTDATA
-  fi
 
-
-  curl -s -o /dev/null -w "%{http_code}" -X POST -H "Authorization: Bearer $SUPERVISOR_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d $RESTDATA \
-  http://supervisor/core/api/states/sensor.$DEVICEID
+  echo -e "\n Rest Output"
+  echo $RESTDATA
   echo -e "\n"
 }
 
@@ -158,15 +135,11 @@ if [[ "$DURATION" != "0" ]]; then
 fi
 # Function, runs a rtlamr listen event
 function listener {
-  /go/bin/rtlamr -format json -msgtype=$AMR_MSGTYPE $x| while read line
-  do
-    postto
-  done
+  line='{"Time":"2022-06-25T15:10:38.160105524-04:00","Offset":0,"Length":0,"Type":"R900","Message":{"ID":1540559732,"Unkn1":163,"NoUse":32,"BackFlow":0,"Consumption":3543684,"Unkn3":0,"Leak":0,"LeakNow":0}}'
+  #line='{"Time":"2022-06-25T15:10:36.618461523-04:00","Offset":0,"Length":0,"Type":"SCM","Message":{"ID":23876447,"Type":11,"TamperPhy":0,"TamperEnc":2,"Consumption":25813,"ChecksumVal":64424}}'
+  postto
 }
 
-# Main Event Loop, will restart if buffer runs out
-while true; do
-  listener
-  sleep $PT
-done
+# run listener once
+listener
 
