@@ -30,7 +30,7 @@ options:
   gas_unit_of_measurement: ft³
   electric_unit_of_measurement: kWh
   water_unit_of_measurement: gal
-  water_use_tenths: True
+  water_use_tenths: False
 
   scm_plus_gas_divisor: 1
 schema:
