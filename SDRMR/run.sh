@@ -44,7 +44,7 @@ fi
 # Sleep to fill buffer a bit
 sleep 5
 function is_gas() {
-    LIST=(0 1 2 9 12 156)
+    LIST=(0 1 2 9 12 156 188)
     VALUE=$1
     [[ ${LIST[@]} =~ $VALUE ]]
 }
