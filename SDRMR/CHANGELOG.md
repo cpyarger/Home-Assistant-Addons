@@ -2,6 +2,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.8.34] - 2022-12-20
+### Changes
+ - Fixed recognition for water meter of type 171
+
 ## [0.8.31] - 2022-06-1
 ### Changes
  - Fixed recognition for gas meter of type 12

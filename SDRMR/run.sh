@@ -54,7 +54,7 @@ function is_electric() {
     [[ ${LIST[@]} =~ $VALUE ]]
 }
 function is_water() {
-    LIST=(3 11 13)
+    LIST=(3 11 13 171)
     VALUE=$1
     [[ ${LIST[@]} =~ $VALUE ]]
 }
