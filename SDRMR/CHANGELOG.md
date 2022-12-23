@@ -2,6 +2,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.8.35] - 2022-12-23
+### Changes
+ - Fixed improper bracket placement in SCM+ water JSON output.
+
 ## [0.8.34] - 2022-12-20
 ### Changes
  - Fixed recognition for water meter of type 171
