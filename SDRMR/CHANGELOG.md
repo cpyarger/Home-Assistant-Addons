@@ -2,6 +2,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.8.36] - 2022-12-23
+### Changes
+ - Added device class SCM+ water JSON output
+ - Added state class SCM+ water JSON output
+ - Now SCM+ water readings should be compatable with the Energy Dashboard
+
 ## [0.8.35] - 2022-12-23
 ### Changes
  - Fixed improper bracket placement in SCM+ water JSON output.
