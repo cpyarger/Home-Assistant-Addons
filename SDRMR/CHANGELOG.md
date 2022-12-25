@@ -2,6 +2,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.8.37] - 2022-12-25
+### Changes
+ - Implemented multipliers for each utility type
+ - Removed water tenths and gas divisor options due to redundancy
+
 ## [0.8.36] - 2022-12-23
 ### Changes
  - Added device class SCM+ water JSON output

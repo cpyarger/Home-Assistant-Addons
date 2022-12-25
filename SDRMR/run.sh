@@ -17,9 +17,10 @@ PT="$(jq --raw-output '.pause_time' $CONFIG_PATH)"
 GUOM="$(jq --raw-output '.gas_unit_of_measurement' $CONFIG_PATH)"
 EUOM="$(jq --raw-output '.electric_unit_of_measurement' $CONFIG_PATH)"
 WUOM="$(jq --raw-output '.water_unit_of_measurement' $CONFIG_PATH)"
-WTEN="$(jq --raw-output '.water_use_tenths' $CONFIG_PATH)"
 
-SCMPGD="$(jq --raw-output '.scm_plus_gas_divisor' $CONFIG_PATH)"
+GMP="$(jq --raw-output '.gas_multiplier' $CONFIG_PATH)"
+EMP="$(jq --raw-output '.electric_multiplier' $CONFIG_PATH)"
+WMP="$(jq --raw-output '.water_multiplier' $CONFIG_PATH)"
 
 # Print the set variables to the log
 echo "Starting RTLAMR with parameters:"
@@ -30,8 +31,9 @@ echo "Duration = " $DURATION
 echo "Electric Unit of measurement = " $EUOM
 echo "Gas Unit of measurement = " $GUOM
 echo "Water Unit of measurement = " $WUOM
-echo "Water measurements provided in tenths = " $WTEN
-echo "SCM PLUS GAS DIVISOR = " $SCMPGD
+echo "Gas Multiplier = " $GMP
+echo "Electric Multiplier = " $EMP
+echo "Water Multiplier = " $WMP
 echo "Debug is " $DEBUG
 
 # Starts the RTL_TCP Application
@@ -62,18 +64,20 @@ function is_water() {
 # Function, parses scm and scmplus data
 function scmplus_parse {
   STATE="$(echo $line | jq -rc '.Message.Consumption' | tr -s ' ' '_')"
-
-  FIXED_STATE=$(($STATE/$SCMPGD))
   EPT="$(echo $line | jq -rc '.Message.EndpointType' | tr -s ' ' '_')"
+  
   if [[ $EPT =~ "null" ]]; then
     EPT="$(echo $line | jq -rc '.Message.Type' | tr -s ' ' '_')"
   fi
   scmUID=$DEVICEID-sdrmr
   if is_gas $EPT; then
-    RESTDATA=$( jq -nrc --arg state "$FIXED_STATE" --arg uid "$scmUID" --arg uom "$GUOM" '{"state": $state, "attributes": {"unique_id": $uid, "state_class": "total_increasing", "device_class": "gas",  "unit_of_measurement": $uom }}')
+    STATE=$(bc <<< "$STATE*$GMP")
+    RESTDATA=$( jq -nrc --arg state "$STATE" --arg uid "$scmUID" --arg uom "$GUOM" '{"state": $state, "attributes": {"unique_id": $uid, "state_class": "total_increasing", "device_class": "gas",  "unit_of_measurement": $uom }}')
   elif is_electric $EPT; then
+    STATE=$(bc <<< "$STATE*$EMP")
     RESTDATA=$( jq -nrc --arg state "$STATE" --arg uid "$scmUID" --arg uom "$EUOM" '{"state": $state, "attributes": {"unique_id": $uid, "device_class": "energy", "unit_of_measurement": $uom, "state_class": "total_increasing" }}')
   elif is_water $EPT; then
+    STATE=$(bc <<< "$STATE*$WMP")
     RESTDATA=$( jq -nrc --arg state "$STATE" --arg uid "$scmUID" --arg uom "$WUOM" '{"state": $state, "attributes": {"unique_id": $uid, "device_class": "water", "unit_of_measurement": $uom, "state_class":"total_increasing" }}')
   else
     RESTDATA=$( jq -nrc --arg state "$STATE" --arg uid "$scmUID" '{"state": $state, "attributes": {"unique_id": $uid}}')
@@ -83,6 +87,7 @@ function scmplus_parse {
 # Function, parses R900 data
 function r900_parse {
   STATE="$(echo $line | jq -rc '.Message.Consumption' | tr -s ' ' '_')"
+  STATE=$(bc <<< "$STATE*$WMP")
   LEAK="$(echo $line | jq -rc '.Message.Leak' | tr -s ' ' '_')"
   LEAKNOW="$(echo $line | jq -rc '.Message.LeakNow' | tr -s ' ' '_')"
   BACKFLOW="$(echo $line | jq -rc '.Message.BackFlow' | tr -s ' ' '_')"
@@ -99,11 +104,6 @@ function r900_parse {
   --arg unkn3 "$UNKN3" \
   --arg nouse "$NOUSE" \
   '{"state": $st, "extra_state_attributes": {"unique_id": $uid}, "attributes": { "entity_id": $uid, "state_class": "total_increasing", "unit_of_measurement": "gal", "leak": $le, "leak_now": $ln, "BackFlow": $bf, "NoUse": $nouse, "Unknown1": $unkn1, "Unknown3": $unkn3 }}')
-}
-
-# Function, insert decimal in state value to effectively divide by ten
-function tenths {
-  RESTDATA=$(echo $RESTDATA | jq -rc --arg state "$(echo $RESTDATA | jq -rc '.state' | sed 's/.$/.&/;')" '.state = $state')
 }
 
 # Function, posts data to home assistant that is gathered by the rtlamr script
@@ -125,13 +125,6 @@ function postto {
   else
     VAL="$(echo $line | jq -rc '.Message.Consumption' | tr -s ' ' '_')" # replace ' ' with '_'
     RESTDATA=$( jq -nrc --arg state "$VAL" '{"state": $state}')
-  fi
-  
-  # if water meter and tenths
-  if  [ "$TYPE" = "R900" ] || is_water $EPT; then
-    if $WTEN; then
-      tenths
-    fi
   fi
   
   if ($DEBUG); then
@@ -169,4 +162,3 @@ while true; do
   listener
   sleep $PT
 done
-
