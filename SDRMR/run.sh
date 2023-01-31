@@ -145,12 +145,10 @@ function postto {
 
 # Set flags if variables are set
 x=""
+y="-symbollength=$AMR_SYMBOL"
+
 if [ ! -z "$AMR_IDS" ]; then
   x="-filterid=$AMR_IDS"
-fi
-
-if [[ "$AMR_SYMBOL" != "0" ]]; then
-  x="-symbollength=$AMR_SYMBOL"
 fi
 
 if [[ "$DURATION" != "0" ]]; then
@@ -160,7 +158,7 @@ fi
 
 # Function, runs a rtlamr listen event
 function listener {
-  /go/bin/rtlamr -format json -msgtype=$AMR_MSGTYPE $x| while read line
+  /go/bin/rtlamr -format json -msgtype=$AMR_MSGTYPE $x $y| while read line
   do
     postto
   done
