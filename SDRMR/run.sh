@@ -14,6 +14,7 @@ AMR_MSGTYPE="$(jq --raw-output '.msgType' $CONFIG_PATH)"
 AMR_IDS="$(jq --raw-output '.ids' $CONFIG_PATH)"
 DURATION="$(jq --raw-output '.duration' $CONFIG_PATH)"
 PT="$(jq --raw-output '.pause_time' $CONFIG_PATH)"
+AMR_SYMBOL="$(jq --raw-output '.rtlamr_symbol_length' $CONFIG_PATH)"
 GUOM="$(jq --raw-output '.gas_unit_of_measurement' $CONFIG_PATH)"
 EUOM="$(jq --raw-output '.electric_unit_of_measurement' $CONFIG_PATH)"
 WUOM="$(jq --raw-output '.water_unit_of_measurement' $CONFIG_PATH)"
@@ -28,6 +29,7 @@ echo "AMR Message Type =" $AMR_MSGTYPE
 echo "AMR Device IDs =" $AMR_IDS
 echo "Time Between Readings =" $PT
 echo "Duration = " $DURATION
+echo "Symbol length in samples =" $AMR_SYMBOL
 echo "Electric Unit of measurement = " $EUOM
 echo "Gas Unit of measurement = " $GUOM
 echo "Water Unit of measurement = " $WUOM
@@ -103,7 +105,8 @@ function r900_parse {
   --arg unkn1 "$UNKN1" \
   --arg unkn3 "$UNKN3" \
   --arg nouse "$NOUSE" \
-  '{"state": $st, "extra_state_attributes": {"unique_id": $uid}, "attributes": { "entity_id": $uid, "state_class": "total_increasing", "unit_of_measurement": "gal", "leak": $le, "leak_now": $ln, "BackFlow": $bf, "NoUse": $nouse, "Unknown1": $unkn1, "Unknown3": $unkn3 }}')
+  --arg uom "$WUOM" \
+  '{"state": $st, "extra_state_attributes": {"unique_id": $uid}, "attributes": { "entity_id": $uid, "device_class": "water", "state_class": "total_increasing", "unit_of_measurement": $uom, "leak": $le, "leak_now": $ln, "BackFlow": $bf, "NoUse": $nouse, "Unknown1": $unkn1, "Unknown3": $unkn3 }}')
 }
 
 # Function, posts data to home assistant that is gathered by the rtlamr script
@@ -142,6 +145,8 @@ function postto {
 
 # Set flags if variables are set
 x=""
+y="-symbollength=$AMR_SYMBOL"
+
 if [ ! -z "$AMR_IDS" ]; then
   x="-filterid=$AMR_IDS"
 fi
@@ -149,9 +154,11 @@ fi
 if [[ "$DURATION" != "0" ]]; then
   x="$x -duration=${DURATION}s"
 fi
+
+
 # Function, runs a rtlamr listen event
 function listener {
-  /go/bin/rtlamr -format json -msgtype=$AMR_MSGTYPE $x| while read line
+  /go/bin/rtlamr -format json -msgtype=$AMR_MSGTYPE $x $y| while read line
   do
     postto
   done
