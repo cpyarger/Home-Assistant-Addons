@@ -1,6 +1,6 @@
 ---
 name: SDR Meter Reader
-version: 0.8.36
+version: 0.8.37
 slug: sdrmr
 description: RF to Home Assistant REST API Bridge based on RTL_SDR/RTL_433 for RTL2832U based DVB-T USB tuners
 startup: application
@@ -20,6 +20,7 @@ arch:
   - amd64
   - armv7
   - i386
+  
 options:
   debug: False
   rtltcpdebug: False
@@ -30,9 +31,10 @@ options:
   gas_unit_of_measurement: ft³
   electric_unit_of_measurement: kWh
   water_unit_of_measurement: gal
-  water_use_tenths: False
+  gas_multiplier: 1
+  electric_multiplier: 1
+  water_multiplier: 1
 
-  scm_plus_gas_divisor: 1
 schema:
   debug: bool
   rtltcpdebug: bool
@@ -43,7 +45,6 @@ schema:
   gas_unit_of_measurement: list(ft³|m³)
   electric_unit_of_measurement: list(Wh|kWh|MWh)
   water_unit_of_measurement: list(gal|l)
-  water_use_tenths: bool
-  scm_plus_gas_divisor: int?
-
-
+  gas_multiplier: float
+  electric_multiplier: float
+  water_multiplier: float

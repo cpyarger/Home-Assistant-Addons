@@ -17,6 +17,8 @@ A hass.io addon for a software defined radio tuned to listen for Utility Meter R
     - msgType (RTLAMR Message type; see below)
     - ids* (IDs of the sensors you want to watch)
     - pause_time (Time between Readings in seconds)
+    - *_unit_of_measurement (The unit appended to the output)
+    - *_multiplier (value read from meter is multiplied by this)
 
 3) Start the addon
 
@@ -31,6 +33,13 @@ The following message types are supported by rtlamr:
 - **r900**: Message type used by Neptune R900 transmitters, provides total consumption and leak flags.
 - **r900bcd**: Some Neptune R900 meters report consumption as a binary-coded digits.
 - **all**: Listen for ALL of the above message types
+
+### Multipliers
+
+Some meters report in units that are not compatible with the HA energy dashboard. Multipliers can be set for each meter type so that meter readings can be converted to a compatible unit of measure. Here are a few examples of usage:
+
+- Some water meters report usage in 10ths of a gallon. To correct the reading, set water_multiplier = 0.1.
+- If your meter reports in CCF (centi cubic feet), you can set the multiplier to 748.1 to conver to gallons. Then select gal for the unit of measure.
 
 ## Hardware
 
