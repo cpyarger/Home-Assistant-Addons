@@ -63,6 +63,8 @@ Then run the following command on the host
 sudo rmmod dvb_usb_rtl28xxu rtl2832
 ```
 
+If the addon does not run after an update, try performing a full reboot of the system. If you continue to have and issue, please submit a bug report through github issues.
+
 ## Posting a bug report, or adding more data from your meters. 
 I only have a couple meters on my house, so I don't have example data to get all the sensors right, 
 
